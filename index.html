@@ -113,6 +113,7 @@
   .wkey:hover{background:linear-gradient(#fff,#e3e6ee)}
   .wkey.in-range{background:linear-gradient(#eef5ff,#cfe2ff)}
   .wkey.active{background:linear-gradient(#fff3b0,#ffcf3f)!important;box-shadow:0 0 16px rgba(255,180,0,.6)}
+  .kbfin{position:absolute;top:6px;left:50%;transform:translateX(-50%);min-width:16px;height:16px;line-height:16px;text-align:center;padding:0 2px;background:#6d4aff;color:#fff;border-radius:9px;font-size:11px;font-weight:800;z-index:6;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.35)}
   .wkey .lbl{font-size:12px;font-weight:600;color:#3a3f52;padding-bottom:9px;pointer-events:none}
   .wkey .octn{position:absolute;bottom:26px;font-size:9px;color:#aab0c0;font-weight:700;pointer-events:none}
   .wkey.in-range .lbl{color:#16407a}
@@ -166,6 +167,8 @@
 </style>
 </head>
 <body>
+<audio id="silence" loop playsinline preload="auto" src="data:audio/wav;base64,UklGRmQGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAGAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA"></audio>
+
 <div class="app">
 
   <div class="head">
@@ -353,6 +356,7 @@ let actx=null;
 function audio(){if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();return actx;}
 let audioPrimed=false;
 function unlockAudio(){const ac=audio(); if(ac.state==='suspended')ac.resume();
+  const s=document.getElementById('silence'); if(s&&s.paused){ s.volume=1; try{const p=s.play(); if(p&&p.catch)p.catch(()=>{});}catch(e){} }
   if(!audioPrimed){audioPrimed=true; try{
     const buf=ac.createBuffer(1,1,22050),src=ac.createBufferSource();src.buffer=buf;src.connect(ac.destination);src.start(0);
     const o=ac.createOscillator(),g=ac.createGain();g.gain.value=0.00001;o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+0.03);
@@ -481,11 +485,11 @@ const EXERCISES=[
  {name:'Арпеджио До мажор — правая рука',clef:'treble',desc:'Звуки До-Ми-Соль по очереди. Ровный звук, расслабленная кисть.',
   seq:[['C4',1],['E4',2],['G4',3],['C5',5],['G4',3],['E4',2],['C4',1]]},
  {name:'Трезвучия по гамме До мажор — правая рука',clef:'treble',desc:'Аккорды ступеней, пальцами 1-3-5, играть вместе.',
-  chords:[['C4','E4','G4'],['D4','F4','A4'],['E4','G4','B4'],['F4','A4','C5'],['G4','B4','D5'],['A4','C5','E5'],['B4','D5','F5'],['C5','E5','G5']],fin:'1-3-5'},
+  chords:[['C4','E4','G4'],['D4','F4','A4'],['E4','G4','B4'],['F4','A4','C5'],['G4','B4','D5'],['A4','C5','E5'],['B4','D5','F5'],['C5','E5','G5']],finArr:['1','3','5']},
  {name:'Арпеджио До мажор — левая рука',clef:'bass',desc:'До-Ми-Соль левой рукой. Пальцы 5-3-1, ровный звук.',
   seq:[['C3',5],['E3',3],['G3',1],['C4',5],['G3',1],['E3',3],['C3',5]]},
  {name:'Трезвучия по гамме — левая рука',clef:'bass',desc:'Аккорды ступеней левой рукой, пальцы 5-3-1.',
-  chords:[['C3','E3','G3'],['D3','F3','A3'],['E3','G3','B3'],['F3','A3','C4'],['G3','B3','D4'],['A3','C4','E4'],['B3','D4','F4'],['C4','E4','G4']],fin:'5-3-1'},
+  chords:[['C3','E3','G3'],['D3','F3','A3'],['E3','G3','B3'],['F3','A3','C4'],['G3','B3','D4'],['A3','C4','E4'],['B3','D4','F4'],['C4','E4','G4']],finArr:['5','3','1']},
  {name:'Хроматическая гамма — правая рука',clef:'treble',desc:'Все клавиши подряд по полутонам. 1-3-1-3, на белых после Ми и Си палец 1-2.',
   seq:[['C4',1],['C#4',3],['D4',1],['D#4',3],['E4',1],['F4',1],['F#4',3],['G4',1],['G#4',3],['A4',1],['A#4',3],['B4',1],['C5',1],['B4',1],['A#4',3],['A4',1],['G#4',3],['G4',1],['F#4',3],['F4',1],['E4',1],['D#4',3],['D4',1],['C#4',3],['C4',1]]},
  {name:'Хроматическая гамма — левая рука',clef:'bass',desc:'Полутоны вверх и вниз левой рукой.',
@@ -493,9 +497,9 @@ const EXERCISES=[
  {name:'Гамма Ля минор — правая рука',clef:'treble',desc:'Натуральный минор от Ля. Аппликатура как в До мажоре, начиная с Ля.',
   seq:[['A4',1],['B4',2],['C5',3],['D5',1],['E5',2],['F5',3],['G5',4],['A5',5],['G5',4],['F5',3],['E5',2],['D5',1],['C5',3],['B4',2],['A4',1]]},
  {name:'Обе руки — гамма противодвижением',clef:'grand',desc:'Правая вверх от До первой, левая вниз от До малой — симметрично. Играть двумя руками.',
-  chords:[['C4','C3'],['D4','B2'],['E4','A2'],['F4','G2'],['G4','F2'],['A4','E2'],['B4','D2'],['C5','C2'],['B4','D2'],['A4','E2'],['G4','F2'],['F4','G2'],['E4','A2'],['D4','B2'],['C4','C3']],fin:'обе руки'},
+  chords:[['C4','C3'],['D4','B2'],['E4','A2'],['F4','G2'],['G4','F2'],['A4','E2'],['B4','D2'],['C5','C2'],['B4','D2'],['A4','E2'],['G4','F2'],['F4','G2'],['E4','A2'],['D4','B2'],['C4','C3']],fins:[['1','1'],['2','2'],['3','3'],['1','1'],['2','2'],['3','3'],['4','4'],['5','5'],['4','4'],['3','3'],['2','2'],['1','1'],['3','3'],['2','2'],['1','1']]},
  {name:'Обе руки — октавы До',clef:'grand',desc:'До в двух руках одновременно по всему стану. Чувство октавы и баланс рук.',
-  chords:[['C4','C3'],['D4','D3'],['E4','E3'],['F4','F3'],['G4','G3'],['A4','A3'],['B4','B3'],['C5','C4']],fin:'1 и 5'},
+  chords:[['C4','C3'],['D4','D3'],['E4','E3'],['F4','F3'],['G4','G3'],['A4','A3'],['B4','B3'],['C5','C4']],fins:[['1','5'],['2','4'],['3','3'],['1','2'],['2','1'],['3','3'],['4','2'],['5','1']]},
  {name:'Гамма Соль мажор — правая рука',clef:'treble',desc:'Один диез — Фа♯. Аппликатура 1-2-3-1-2-3-4-5, подкладывание 1-го на До.',
   seq:[['G4',1],['A4',2],['B4',3],['C5',1],['D5',2],['E5',3],['F#5',4],['G5',5],['F#5',4],['E5',3],['D5',2],['C5',1],['B4',3],['A4',2],['G4',1]]},
  {name:'Гамма Фа мажор — правая рука',clef:'treble',desc:'Один бемоль — Си♭ (на экране показан как Ля♯). Аппликатура 1-2-3-4-1-2-3-4.',
@@ -598,10 +602,10 @@ function loadExercise(){
   while(lo+shift<21) shift+=12;
   const cnt=Math.max(1,+(($('exCount')||{value:30}).value)||30);
   let base;
-  if(ex.chords) base=ex.chords.map(ns=>({midis:ns.map(n=>midiFromName(n)+shift),dur:2,durName:'half',finger:ex.fin}));
-  else base=ex.seq.map(([n,f])=>({midis:[midiFromName(n)+shift],dur:1,durName:'quarter',finger:f}));
+  if(ex.chords) base=ex.chords.map((ns,ci)=>({midis:ns.map(n=>midiFromName(n)+shift),dur:2,durName:'half',fingers:(ex.fins?ex.fins[ci]:ex.finArr)||null}));
+  else base=ex.seq.map(([n,f])=>({midis:[midiFromName(n)+shift],dur:1,durName:'quarter',fingers:[f]}));
   const reps=Math.max(1,Math.round(cnt/base.length));
-  let out=[]; for(let r=0;r<reps;r++) out=out.concat(base.map(it=>({midis:it.midis.slice(),dur:it.dur,durName:it.durName,finger:it.finger})));
+  let out=[]; for(let r=0;r<reps;r++) out=out.concat(base.map(it=>({midis:it.midis.slice(),dur:it.dur,durName:it.durName,fingers:it.fingers?it.fingers.slice():null})));
   return out;
 }
 function enrich(it){
@@ -620,7 +624,6 @@ function loadUserMelody(){
   status('Своя мелодия загружена · '+seq.length+' нот');
 }
 function generate(){
-  audio();
   if(mode==='custom'){ if($('userMel').value.trim()) loadUserMelody(); else status('Впишите ноты буквами и нажмите «Загрузить»'); return; }
   if(mode==='random') seq = $('swMelody').classList.contains('on')?genMelody():genRandom();
   else seq = mode==='scale'?genScale():mode==='chord'?genChords():loadExercise();
@@ -678,7 +681,9 @@ function renderGrand(wrap,startX,total){
       if(n.durName==='eighth'){const sx=up?x+6.5:x-6.5,ey=up?top-32:bot+32,d=up?1:-1;
         g+='<path d="M'+sx+' '+ey+' q9 '+(6*d)+' 8 '+(16*d)+'" stroke="#161821" stroke-width="2" fill="none"/>';}
     }
-    if(n.finger&&hintsOn) g+='<text x="'+(x-4)+'" y="'+(Math.min.apply(null,ys)-16)+'" font-size="13" font-weight="800" fill="#6d4aff">'+n.finger+'</text>';
+    if(hintsOn&&n.fingers){ n.fingers.forEach((f,k)=>{ if(f==null||f==='')return; const yy=ys[k]+20, one=(''+f).length===1;
+      if(one) g+='<circle cx="'+x+'" cy="'+(yy-4)+'" r="9" fill="#efeaff" stroke="#6d4aff" stroke-width="1.3"/>';
+      g+='<text x="'+x+'" y="'+yy+'" text-anchor="middle" font-size="'+(one?12.5:11)+'" font-weight="800" fill="#6d4aff">'+f+'</text>'; }); }
     if(hintsOn) g+='<text x="'+x+'" y="'+LABEL_Y+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6d4aff">'+(n.label||'')+'</text>';
     n._px=x; x+=noteW(n.durName);
   });
@@ -713,7 +718,9 @@ function renderSingle(wrap,startX,total){
       if(n.durName==='eighth'){const sx=up?x+6.5:x-6.5,ey=up?tp-32:bt+32,d=up?1:-1;
         g+='<path d="M'+sx+' '+ey+' q9 '+(6*d)+' 8 '+(16*d)+'" stroke="#161821" stroke-width="2" fill="none"/>';}
     }
-    if(n.finger&&hintsOn) g+='<text x="'+(x-4)+'" y="'+(Math.min.apply(null,ys)-16)+'" font-size="13" font-weight="800" fill="#6d4aff">'+n.finger+'</text>';
+    if(hintsOn&&n.fingers){ n.fingers.forEach((f,k)=>{ if(f==null||f==='')return; const yy=ys[k]+20, one=(''+f).length===1;
+      if(one) g+='<circle cx="'+x+'" cy="'+(yy-4)+'" r="9" fill="#efeaff" stroke="#6d4aff" stroke-width="1.3"/>';
+      g+='<text x="'+x+'" y="'+yy+'" text-anchor="middle" font-size="'+(one?12.5:11)+'" font-weight="800" fill="#6d4aff">'+f+'</text>'; }); }
     if(hintsOn) g+='<text x="'+x+'" y="'+LBL+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6d4aff">'+(n.label||'')+'</text>';
     n._px=x; x+=noteW(n.durName);
   });
@@ -796,7 +803,7 @@ function renderKeyboard(){
   });
 }
 function keyEl(m){return document.querySelector('[data-midi="'+m+'"]');}
-function clearActive(){document.querySelectorAll('.wkey.active,.bkey.active').forEach(e=>e.classList.remove('active'));}
+function clearActive(){document.querySelectorAll('.wkey.active,.bkey.active').forEach(e=>{e.classList.remove('active');const f=e.querySelector('.kbfin');if(f)f.remove();});}
 function keyX(m){return IS_SHARP[m%12]?((WIDX[m-1]+1)*WKEYW):(WIDX[m]*WKEYW);}
 function scrollToRange(){
   const xs=[...rangeSet].filter(m=>m>=LO&&m<=HI).map(keyX); if(!xs.length)return;
@@ -814,7 +821,8 @@ function setIndex(i,sound){
   sw.scrollTo({left:Math.max(0,n._x - Math.floor(sw.clientWidth/2)), behavior:'smooth'});
   clearActive();
   if(hintsOn&&labelsOn){
-    let fk=null; n.midis.forEach(m=>{const el=keyEl(m);if(el){el.classList.add('active');if(!fk)fk=el;}});
+    let fk=null; n.midis.forEach((m,k)=>{const el=keyEl(m);if(el){el.classList.add('active');if(!fk)fk=el;
+      if(n.fingers&&n.fingers[k]){const b=document.createElement('div');b.className='kbfin';b.textContent=n.fingers[k];el.appendChild(b);}}});
     if(fk){const ks=$('kbScroll'),l=fk.offsetLeft; if(l<ks.scrollLeft+40||l>ks.scrollLeft+ks.clientWidth-80) ks.scrollLeft=l-ks.clientWidth/2;}
   }
   moveTicker(); updateNav(); if(sound)soundItem(n);
