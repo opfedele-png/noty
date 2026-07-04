@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#6d4aff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Ноты">
+<meta name="application-name" content="Ноты">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%20%22%D0%9D%D0%BE%D1%82%D1%8B%20%E2%80%94%20%D0%BD%D0%BE%D1%82%D0%BD%D1%8B%D0%B9%20%D1%82%D1%80%D0%B5%D0%BD%D0%B0%D0%B6%D1%91%D1%80%22%2C%20%22short_name%22%3A%20%22%D0%9D%D0%BE%D1%82%D1%8B%22%2C%20%22description%22%3A%20%22%D0%A2%D1%80%D0%B5%D0%BD%D0%B0%D0%B6%D1%91%D1%80%20%D1%87%D1%82%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BD%D0%BE%D1%82%3A%20%D1%81%D0%BA%D1%80%D0%B8%D0%BF%D0%B8%D1%87%D0%BD%D1%8B%D0%B9%20%D0%B8%20%D0%B1%D0%B0%D1%81%D0%BE%D0%B2%D1%8B%D0%B9%20%D0%BA%D0%BB%D1%8E%D1%87%D0%B8%2C%20%D0%B3%D0%B0%D0%BC%D0%BC%D1%8B%2C%20%D0%B0%D0%BA%D0%BA%D0%BE%D1%80%D0%B4%D1%8B%2C%20%D1%83%D0%BF%D1%80%D0%B0%D0%B6%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%22%2C%20%22start_url%22%3A%20%22./%22%2C%20%22scope%22%3A%20%22./%22%2C%20%22display%22%3A%20%22standalone%22%2C%20%22orientation%22%3A%20%22any%22%2C%20%22background_color%22%3A%20%22%23e9ecf3%22%2C%20%22theme_color%22%3A%20%22%236d4aff%22%2C%20%22lang%22%3A%20%22ru%22%2C%20%22icons%22%3A%20%5B%7B%22src%22%3A%20%22data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAMSElEQVR4nO3deZAU1R0H8G/39MxeLIhgICJXCC4BBCIsiDGFCywhomgUIpUQq5KKZYmuR7wCWpV/osbEgCiQSvJHYnmEQ5OI4ZCjpMDERSBGSSyNxuARtESu3dmLmenOH709O7vM7vbO9PXe%2B36qpoplj3m7/fv17/dev57REDEPXGNZYY%2BB/PPTP2ta2GPIFepg7r/aZLATHnxBDy0OA39iBj31JOhkCOzJGPjUF0Elgu9PwsCnYvidCL798BUMfPLQQz4lguc/lIFPfvI6ETz9YSsWZhj85LuHNsc8i1tPfhADn8LgRSLoxf4ABj%2BFxYvYKyqDljP4KQIeLqISFFwBGPwUFcXEYkEJwOCnqCk0JvtcOpYvTDP4KbIe3mz0Kab79MXLr2LwU/Q9/KL7JHD9hT9m8JNAfuYyCVzNARj8JBq3MdtrAjD4SVRuYrfoC2FEIuuxT7rvqhTP/iS8R16Mdxvn3X7ivisZ/CSPR/6SPwnYApHS8iYAz/4km%2B5imhWAlHZWX3Qvz/4ksZ93mQsYZ38J45/U0akFuvfKM4x%2BklrXGO9cARj%2BpJhsBbh3Ac/%2BpIbcWM9WAEY/qYjLoKQ0DQDuWdDGAkDK%2BcWWEo0VgJRmAOz/SV32JJgZQIpiC0RK0%2B6%2BghNgUhcrACnNsDgBIIWxApDSDBYAUhkrACmNCUBKM9gBkcoMXgYmlbEFIqXluSmeRPLLraV5//%2BuK1oDHomYDIsdkJR4XN1hCySpldtKsXJb/upAHZgAkmMi9IyrQIpwkuBH32wJeSTRwgqgmJXbyrByW1nYw4gMXghTlJMEdypeEbgZTnGrnESYr2YisAUiAMCq7WVYtV291ogJQJ2olghcBaK8nCS4c35zyCPxFyfB1KNV28sBAHdImghsgciVx7aX47H2ZJAJE4D6RLZE4DIoFcRJgju%2BIXZrxDkAFeWxl%2BxEuF3QROAqEHlidTYRmkIeSd9wDkCeWv1SBVa/VBH2MFxjApAvREkEJgD5KuqJwEkwBSKqccZlUPLdbfOiOzFmC0RK4zIoBSC6McYKQL66bV4y7CH0iJNg8lXU44sVQFJ185Koi/jZNwp0WAAfAj%2B60/75utrwkqCuNhn%2B36eXByuAAupqk6EmQpTxTfIkle%2B43lrbiDU7K0MdQ9SwAijm1tpG3FrbGMjziIAJoKigEiHqmACK8yMJREosJgApXQ34BhmSKuS43jK3EWt3FT9JFimmuBdIWoUd11vmNgAA1u7qX9T3i4ItEOV1y9wG4YK5EEwA6pHsScAEoF65rQYiJosege0YfBTx6I4fz7WslwAP%2B29RyIMVgPpk2dyGXhNBJIZQa1bkns/Hddmc01i3e0Cnj0XECkAFWzbntLCB7%2BAdYZIK8rjeLHASsAKQ0pgApDQmACmNq0Cy4nF1hZNgSfG4usMWiJTGBCClMQFIaUwAUhonwZLicXWHy6Cy4nF1hS0QKY0JoCBNC3sE0cEEkNiYiQaGjogBAC6cYmDC9DiAju6IicBJsLDKKjRU1yS6/fzdqysxdpIBMwN89J8MRl5oJ8KxT0w89WgTps5KYPPvWtB4qnME6DHAzPg69EjRbrz8BHNAIFMui6O6JoHq2d0Hfy4zYwc1AKTTgGF0/vw7r6fxZn0Kg4bo2LCmGZZlVwZV5tDajbOOK/KrimvMRCMb9JUDi%2BtacwM8Xwt08OUzeGZVE5oa1AgLJkBEfWFYDNNm20E/bHTM9%2BczTUADoLXn15uvprBmeaP0LRHnABF018pKjLs4Huhz6u2B71SGiTPiuPxbpXj5T62BjiNoXAWKmC%2BNNzBibHjXJ522SNeB79xejse3DMTC75cBAGJGD98oKAl/JbFoOjDwPB1L6spRNTmO8ko7AsOehFrtrxxVVqGhenYCb/w1hQ/%2BnQ53UD5gBQiZZQITpsXx1csS2eAHwl%2Bj17SO%2BcDQ4TE88Jv%2BmFGbyH5OFnx59BDVLi7F9DklGDXOLsTdrcyEzRlX1ZQ49u9sC706eYlvkBGiOYvKMGhIRxGOYvADHeP6%2BoISjBlv4IkVjTh2VI6lIbZAAdI0YOBgHfes7o9f7x6EQUN0mGbYo3IvnQLOHx3D1FnuLsKJgAkQEOfi06RLE6iaEs%2BuqOgCHQGjfWXW7VVoEQj05xeb02p%2Be1l5p49FNPJCIztvER0TICAjqww8%2BPQ5KCnTkElHt993a7okVcAQ4e3sRabr9jaDOdeWYshwe0uDDBeULplXgg3rmsIeRtFYAXzmTHIvnV8CQOzWx5FJA/0H6jjvfP/3KPnNYAHw17SaEtz0E/u9d3O3JossZgA7Nrbg2P8y0HT7Yp6oWAF84qzuLFhalv23DMHvmDmvvaIJHPwAd4P6JmMCw0bHMGKsBA1/F5k0UHmOjtHjDbz/ltj7g1gBfODsobnhrn4AxD9LdhUzgIN72vD%2BW2nhqxr3AvnAMoGxF8UxdlIc6VTHBSQZOPuCpl1eAk1rEP5mGVYAn7x7OAVAruDPtWNjCyxLrCvZ%2BXAVyCcXXWJfKDJN8YOkq%2BakhRd/3wRY4t8uyUmwx5x7aBfdVGF/LFnwa5r9OyUb5YgcyQ5P%2BMwMMHhoDMO/LOfLrpoZe5Lf/1w5QkeO3yJC9Bjw%2BacZHD2SEX6/T1fOhbxNv2pCwwk5lraYAB4zM0DNNWU4f1RM%2BP44l2V1XMjb/ceWcAfjId1eBuXDy8fr%2B%2ByXEhF9jTyXU822PtsMwIKmh/939uLBSbDHdB04edzE2/9IYdwUOdZA0ykLRlzDu4dT2Le1xQ4dOTogLoN6zcwAk2YmMG5KPBs4IrMswIhrOPFZBg/efDLs4XiOcwAfOPtjRA9%2BoKP1eWplstPHsmAC%2BCB52sSBl9vCHkbR0ikLLU0WXtnaivcOp%2Bytz5J1DJwD%2BKR%2Bdyuqa0rCHkbBTNOuYIf2tuK3DzWEPRzfcDOcTw7uaUXydCX6DRCzyDpXsJ98tBEyx4iYR0cQB/bYbVBGoC3zmfZrF%2B8eTmHzk01oa7Wk286RS767NSJk35YWDB4aw0UzxHkFhVgMOLS3DY%2BvOBX2UAKh3XDpp/LWt4hYsW4gqiYnYJkdN8tEibNjteGkib/va8OeF1pw5J2UdBPefDgJDsDbr6dQNTkRyeAHOvr95UuPo/GUJFe4XIroIZHL5iebcPvVx7IfW1b4y4m5V3L/eeAM1q9NojlpIibR9g03uAoUADNj4eTnwIZ1jZh/fQUGDAr/vKPpwMfvp7Hie5%2BHPZRQhX8kFOCsrGx5pgl1Cz/DE/efAmCfhcOqBqeOm3hlmzy7OgvFVaCA6TpwYE8r9u9uxfSa0uzWgkzGXoHx800yzrRZqN9lP/fh/eJfqfaCtnTmJ%2ByBQlLeT8fim/ph7nXlnf7fqQg9vZ9vPt2tMr3xahte3WkHfjrFw52LCRAR1/6wHw7tbcPCGyowdVYpYjEgdcZCPKF12lWaSXe8uG7XgM%2B9Af%2B/b6dQv7MV9btbceIzie7M8RgTIGTOq0fnGnCujq9cnMDRI2n84L4BGDMhjrYWC3/b0YKaq8vR2mJhx8ZmfG1%2BKc4ZHMOu55ux5ekkJlSXYGJ1Ats3NOPIO6lwfiHBaEtnHmUCRFzV5ATe%2B9cZZNLAF0cY%2BORDe29FvwE6kqfVWrf3mvZdJkCk5VYIZ05A3uEyaMTltkcMfu8xAUhpvCeYlMYKQErjm%2BSR0vRn64dJdp8/kTvP1g%2BL6g51omAwAUhp9q4STgNIUQbA%2BCd16QDwh/2cCJNanJjPuSGGdYDUw0kwKa1T67NkxscsAyS99fsvyMY9KwAp7azJ75LprAIkr/WvXdAp5lkBSGl5lz%2BXTP%2BIVYCks/614WfFe97XBWL0kyrytkAb8mQKkci6i2nOAUhp3SYAqwDJoqdY7jXIr6/mhJjEteFAzyfyXl8cl7dMksx6nQNsPDCCrRAJyU3supoEMwlING5j1vUqEJOARNGXWO1zUC%2Bu/pCTAoqsTX08URd0Vl88jUlA0bPpYN%2B7lILbmsXTPmASUGRsOjiyoFgu%2BEpwoU9I5LViYrGorRBMAgpbsTHoSQAvYjtEIXjOgxOwp2dwJgIFwYvAd3i6G9TLgRHl43WM%2BRawi6YeYTUgzzx3aJQvser7GZuJQMXwK/AdgbUs1zERqA%2Be9znwHYH37EwE6klQge8IddLKZCAg%2BKDPFblVGyaF3MIM9nz%2BDzXcioN4YHb8AAAAAElFTkSuQmCC%22%2C%20%22sizes%22%3A%20%22192x192%22%2C%20%22type%22%3A%20%22image/png%22%2C%20%22purpose%22%3A%20%22any%22%7D%2C%20%7B%22src%22%3A%20%22data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAggklEQVR4nO3debRdVZ0n8N8d8oYkJAgOiOA8o1ICAUFlCFGZRC2xnbC0pBwKhdKySkurlzV0q9VqCbRiV1suuywnnEpBBBSiIFomjIrQgIKIIraAQMY33nv7j5v7huQlecO97wz781mLteAlhH3Pe5zf9/z2PntXglz6ry9ttbIeA0A3/PdvVipZj4Ed%2BaZk5G9f0lTgASLiA%2BdX1aIMuOiLQLEHmBuhoPdc4B5Q8AG6SyDoPhe0CxR8gMUlECycCzhPij5APggD8%2BOizYGiD5BvwsDsuVC7oegDFJMwsGsuzk4o/ADlIAjMzEWZQtEHKDdhYJILEQo/QGoEgcQDgMIPkLaUg0CSH1zhB2CqFINAUh/4fQo/ALvwwYSCQBIfVOEHYC5SCALVrAfQa4o/AHOVQu0obcJJ4ZsHQO%2BVtRtQug/1vpc0FH4Auu6D59dKVTNL9WHed7LiD0DvfPCC8oSAUnwQhR%2BAxVSGIFD4RYCKPwCLrQy1p9ABoAzfAACKqeg1qJAtjKJfdADKpYhTAoXrACj%2BAORNEWtToQJAES8wAGkoWo0qRMvivQW7qACk7UMFmBLIfQdA8QegaIpQu3IdAIpwAQFgJnmvYbkNAHm/cACwO3muZbkMAHm%2BYAAwF3mtabkLAHm9UAAwX3msbbkKAHm8QADQDXmrcbkJAHm7MADQbXmqdbkIAHm6IADQS3mpeZlvVPDek8dzcSEAYDF96IJ6pjU40w6A4g9AqrKugZmlj/e%2BWPEHgA99K5tOQCYdAMUfANqyqomLnjr%2BRvEHgB380yJ3Aha1A6D4A8DMFrtGLloAUPwBYNcWs1YuSgBQ/AFgdharZuZiIyAAYHH1PAB4%2BgeAuVmM2tnTAKD4A8D89LqG9iwAKP4AsDC9rKXWAABAgnoSADz9A0B39Kqmdj0AKP4A0F29qK1dDQCKPwD0RrdrbL2bf1gr1H8AKIKudQDe8%2BIx1R8AeqibtbYrAUDxB4DF0a2a250pAOUfAAplwR2A95zk6R8AFlM3aq%2BNgAAgQQsKAJ7%2BASAbC63B8w4Aij8AZGshtdgUAAAkaF4BwNM/AOTDfGuyDgAAJGjOAcDTPwDky3xqsw4AACSoMpff/G5P/wCQWx%2B%2BcMms67oOAAAkaNYBwNM/AOTbXGq1DgAAJGhWcwXvPmnU0z8AFMSHL%2BzbbX3XAQCABAkAAJCg3QYA7X8AKJbZ1O76bv8U5R8ASmeXHYB3n%2BjpHwCKaHc13BoAAEiQAAAACdrpe4J/rf0PAIX3kW/PvCeADgAAJEgAAIAEzRgAtP8BoBx2VtN1AAAgQQIAACRohwCg/Q8A5TJTbdcBAIAEzXAWgAYAAJSdDgAAJGhaAPjrE0c8/gNACW1f43UAACBBAgAAJGjaIkD9fwBIw8QJQX91gvl/ACi7j17UX4kwBQAASRIAACBBAgAAJEgAAIAEVSMsAASAVHRqvg4AACRIAACABAkAAJAgAQAAEiQAAECC6hERLacAAEBSdAAAIEGVd50w7PEfABKjAwAACRIAACBBAgAAJKjuBQAASI8OAAAkSAAAgAQJAACQIAEAABIkAABAggQAAEhQ3VuAAJAeHQAASJAAAAAJqoetAAEgOToAAJAgAQAAEiQAAECCBAAASJAAAAAJqmc9AIDZ%2BOeLBhb8Z7zrhOEujATKQQcAABJUtw0AkAz3O5jgLAAgGe53MMkUAAAkSAAAkvGxiwfiYxcvfDEhlIEAACRHEAABAEiYIEDKBAAgeYIAKRIAALYRBEiJAACwHUGAFNS9GQsws04I%2BMvjhzIeCXSfDgDAbnzs4sH42MWDWQ8DukoAAJglIYAyEQAA5kA3gLIQAADmQRCg6BwGBLAAnRDwTgsFKRgdAIAuOOviwThLR4ACEQAAukgQoCgEAIAeEATIu7p9gAB6pxMC3nmcNQLkiw4AwCI465LBOOsSHQHyQwAAWESCAHkhAABkQBAgawIAQIYEAbIiAADkgCDAYhMAAHJEEGCx1MN7gAC50wkB7zxua8YjoaycBQCQY2ddsjQiIt4hCNBlpgAACuDsS5bG2dvCAHSDAABQIIIA3SIAABSQIMBCCQAABSYIMF8CAEAJCALMlQAAUCKCALMlAACUkCDA7ggAACUmCLAzdRsBApRfJwS840U2FKJNBwAgIWd/Z2mc/R0dAQQAgCQJAQgAAInSDUibw4AAEtcJAX9hfUBSdAAAiIiIc76zNM7REUiGAADANIJAGurhPUAAZnDOxNTAloxHQi/oAACwS%2Bd8Z1mc851lWQ%2BDLhMAAJgVQaBcBAAA5kQQKAcBAIB5EQSKTQAAYEEEgWISAADoCkGgWAQAALpKECgGAQCAnhAE8s1ZAAD0lDqTTzoAAPTMmXYRzK26aAZAz6gxuaUDAAAJEgAA6IkzX6j9n2cCAAAkSAAAgATVrdAAoNvOfOHmrIfAbugAAECCBAAASJAAAEBXaf8XgwAAAAkSAAAgQQ4DAqBrztD%2BLwwdAABIkAAAJMPTKUwSAICkCAG949oWiwAAJOeMF25WrEieAAAkSwggZQIAkDTdgO5wDYun7iwgIBm7uN%2Bd8YJ2Afv4pcsXaTAlo5YUjg4AwBSdIABlJwAAbOeMF2wWBObAtSomAQBgJwQByqxu4gZIx/zud2e8YFN8/NI9ujyWMlFHishZAEAyFnK/e/sLNkVExCcEgWk614XiMQUAMAcKHmUhAADM0dtfsEkQoPAEAIB5Sj0IpPzZy0AAAFgghZAiEgAAuiD1bgDFIwAAdJEQQFEIAABdlkI3oOyfLwUCAECPpBAEKC4BAKDHhADySAAAWARl6gaU5XOkTgAAWESKJ3lRd4YDkIyc3O/evmbbuQKXFfRcgZxcRxbGYUBAMvJ2v3vbtiBwboGCQGfMFJ8pAICMKapkoZ6/TAzQK/m9371tzcaIiDj3shUZj2R38nsNmRsdAIAc6QSBPMrz2Jg7AQAgZ962ZqNiS88JAAA5JQjQSwIAQM7lIQTkYQx0lwAAUAC6AXSbAABQIEIA3SIAABTMYncDhI5yEgAACsq0AAshAAAUnBDAfDgLAEhGme93p28LAZ/s8k6CpwsXpaUDAFAip6/ZqGgzKwIAQAkJAeyOAABQUgvtBggR5SYAAJScQs5M6qVeFQMwVcL3u9OP3bZIcO0cFgkmfL1SoAMAkJDTj904EQZ29/sot7qIB6TD/a7j9GM3xCfXrtzF73Ctyk4HACBRpx%2B7IU4/dkPWwyAjAgBA4rYPAUJBGgQAAHQDEiQAADBBCEiHAAAACXIYEJAM9zuYpAMAAAkSAAAgQQIAACRIAACABAkAAJAgAQAAEiQAAECCBAAASJAAAAAJqkfL3lhAItzvYIIOAAAkyFkAQDLc72CSDgAAJEgAAIAECQAAkCABAAASJAAAQIIEAABIkAAAAAkSAAAgQQIAACRIAACABAkAAJAgAQAAEuQwICAZ7ncwSQcAABJUj5ZMDCTC/Q4m6AAAQIIEAABIkAAAAAkSAAAgQQIAACRIAACABAkAAJAgAQAAEiQAAECCnAUAJMP9DibpAADJqbrzgQAApKV/oBLNZvvvq7XJr/f1V3b4vZ1fr%2Bz4S1B49awHALBYTv3LpXHki/vj1uvHY2hrK4a3tuIHF4zESa8fiL0eXo2v/%2B%2BhOHRNX3zuo1vj8Bf1xfe/MRLL9qjE8FArGuMRS/oqMTY6OZFQrUU0Gxl%2BIFiAypuOvt%2B0GJA7lcr0w/s%2B9f2HLNp/u9Vq//fv%2BW0zHv6oatx1eyM2PtCMWq0Sa78%2BHE89aEmc9/GtO/33tx875JEOAJBLnQJaq0esOqavZ/%2BNTnu/8/fNZnuNQKsV8fBHtWdJ93tCLSLa8wFPefbyiIhY/cf9ccX5I/HYp9bjqu%2BNxhXnj8ToSCuW9FdibKQVtXpEY7wnw4auqLzp6D/IqUAuPPnAeqxa3R9HndwfXzhrS%2Bz/pHoctqYv%2BgfyMQm/fUjY3rrvjsSzDu%2BLz31sS1x7%2BegOv64zQJ4IAECmHvmYWqxa3ReHHNMX%2B%2Bxf2/2/kBPbdw9azemLCrdsasUFnxmKu%2B9sRF9/xM/WjUVE6AyQG5U3HSUAAItr2YpKHHpsfxxyTF886Vk7zkROLa5F02q1/6pWp3cKNj7QjC98bGtcf%2BVkZ6BSbQcHyIIAACyag4/ui1Wr%2B%2BKgI3szp583nSDTGG8/%2BUdEbLy/Gd/49FD86KKRiGiHgGiZGmDxCQBATz3pwHocurr9tL9sRUEf67ug1YqI1raCv803Pz0UF31%2BKLMxkTYBAOi6fR7dntdftbov9nl0ceb1F0uruW2aYNulueL8kbjg/2yNTQ%2B6HbN4BACgK5atqLSL/jH98aQDvWE8G9u/TXDN90fjU/%2BwObsBkRSHAQFdceq7lsXBR6Uxt98tU4t/YzzikGP64tor%2BuK6H4xOble8bTEhdFvlz3QAgAV42sFL4sAjlsSRL%2B6PSqUS9SVZj6j4hra04j8%2BtTUuP38k66FQYgIAMGf7PaEWq47pi1Wr%2B%2BNh%2BzpTrFs6bw20mpOLBf/xtA3xm9vbBw7YSIhuMlEHzMnfnLsinnCAW0cvdPY%2BqFTbhwxVaxEveeNgXPKl4bjtxnHFn67yfzEwK0v6K/HEA%2BrxyMfUpj2h0hudNwQOfG5fHPjcvrj/9814/xs2xMiQFEB3CADAjDpb1h58VF8ceMSSWLW63/x%2BRhrjEXs9ohonnDoQV102Gr%2B9wxnELJw1AMBOPerxtfj7z6zMehhMsXljK9558gNZD4MS0MQDdvDw/Wpx4usG47S/bR99a%2B45P5avqMQ/nbdnPOs57XbMTKcSwmyYAgCmeflblsZxrx6Y9rWiHsxTRo3xiL33qcZBR/XF737diHvvtkkA8yM7AhOe9Kx6/NHzlnjiz7HOoUJHHNcfH/zinrFyL7dx5qce4f90SFWlEtE3UIk3v395PPGZS2Lp8vajvgBQHE98Zi2uvcKiQOZOdISEtVoRD31kNZ51eN9E8Y/Q8i%2BCzvfo1Wcuiz//xz2yHQyF5CwASNSzn9cXL3/L0thn//YL551d6CiWPfasxkFH9sXjnl6PX/7f8ahU2zsJwu7UzQBAOqYeLPP8E/snin%2BE4l9UnQ2Dnn/CQAxvHYq77RHALFVOO/I%2BEQASUqlG/Ov3944IT/1ldPqL7o/RYbd1ds8aAEjIkw9cEn/8Z0uj2dx24IziXxqdhZurjnEkM7NjHwBIxEmvH4yXvnFp1sOgRzph7tDV/fGji0ecHMhuCQBQYtVaRK1WiWNfPhCHv7B/4oQ5yuuAQ5e0v8ctAYBdMwUAJdZstLeOPeWtS%2BMR%2B9UU/0T8y2V7x2vesSzrYZBzOgBQYse/ZjBe/pZ2298RvmloNdtvexywytGN7JrbAZRMZ6vYR%2Bxfi1WrJxeEKf5p6HyfH7ZvLZ5%2BiBDAzrklQMk0xiNW7lWND3x%2Bz3j0k%2BrmgRO2anV/1kMgxwQAKJkjTxqIN//dtmN8veqXtENX91n3wU4JAFACU9v7a14xEE/5oyU7fJ309A9W4lBdAHbC7QFKoNWM2PsR1fj0FXvHvo%2BtTWz3C1PXgcBUDgOCkjjxT7at9m%2B1V4FDRMSBR/TFyodW48H7pEKmq4fTgKCwOie/LemrxGHHtp/0zPmzvUNX98V3vzKU9TDIGc8JUGCtZsTTD14S/3Lp3tE/WHEMLDNadYx1AOxIAICCe9UZyyde9bPoj%2B21WhGPf3o9HvsU%2B74xndsFFNjjnlqPRz2upu3PTlUqEXf%2BfDx%2Bdeu4VwKZpm4JABRL55S3418zGKe8tb3fe6tl7p%2Bda4xFRCuiOZ71SMgTHQAomE67/5S3Lotmo/33ij%2B78vgD6vG4p5kCYDoBAAro8Be1F3WZ82e2bAjE9tw%2BoCCmFvuT39B%2B59%2BTP7P1wlcOZj0EckZPCAqi1Yx46D61%2BB9feUhERDSbNvxh9q763khETO4dAW4fUCAnvb79FGe3P%2BbqnrvaC0YUfzrcQqAAOsX%2BeccPRITWP3N30ratoqHDWQCQc9VqRKMZccpblk20by3%2BY65%2Be0cj%2BgYrMTLkrk%2Bb2wjkXOdkvxNeO9h%2BBdDTP/Nww49HFX%2BmEQCgAI55abv1b8Mf5utFrxq0boRp/DhAjnVu2C87bem0f4a5aIy3g%2BNej7AXMJPcTiCnKpV2%2B//wF/bH8pXViR0AYa5q9YgffGs47vtdQweJCQIA5Nxr/mJ51kOgwDrB8eCj%2B6NWD0GSCfVwGhDkUqsV8bSDlsSyPSoxPhZRX5L1iCiizhP/Zz%2ByKRrjrYnDpEAHAHKqb6Ay8fSv%2BDNfnY1/nn/C5EJSiBAAILdGh1ux50Mt2mJhKtWIsdFWfP7szVkPhZwRACCHqtvq/uYN9m1lYVqtiCV9lXjKgdpITCcAQM5UqhHNRsTzTxyIR%2BxX07JlQSqViPGxVlx9%2BYgdJJmmbg0g5EurfWZLvNbqfxaos3HUj787EqN2AWQ78iDk0GFr%2BqNvoDKxgQvMR%2Bdn5/Lzh7IdCLnkMCDIobt%2B2W4D1OoZD4RCa4y3f4ae%2Buy%2B%2BOXN41kPh5zRAYAcOvCIvmi1nN3O/LVakwHyoi9uzXYw5JIAADnSWf1//KuXRqXi2F8W7tufbxd/50iwPT8SkCPNRsQhR/XHshUVT/8sSKXSfo30ws9tnThXAqYSACBnrrliJIa2tDz9s2C1eiWGt7a8SsqM3GIgZ/7kXctjcFnFExsL0my2/1q%2B0m2emfnJgJz54cUjEWHOlvlrjLd/fr587ma7SbJTbjGQM685c1lEOLSF%2BZm6%2Bv/Kbw9nOxhyTQCAnLn9pvb72jYAYiEu%2BLf26n9rSdiZetgLGHJj%2BcpqrDqmP1pNN27mr9mIuPBzWyKi5W0SdsotBnJk84ZmrNyrqvgzL81mu3N06de2xtiohzt2zW0Gcub8f9uS9RAooFYrojNr9JVPbs50LBSDswAgJzpP/U98hnPbmZ9Ktb2PRKMZUatFNBpZj4g8c9QI5ERnrvaZh/VlOxAKqbNo9N//eVNUKoo/u2cKAHLmPz5tCoC5abXaf93yk7HY%2BEDTK6TMigAAOdGZAugf9P4fs9fatvCvUok47xObsh4OBVL3FiDkQ2tby/bE1y5t/3PLXgDsXqUasfGBZpz54vsior0DoG2kmQ0dAMiZb322PQWg%2BLM7nVb/5RcMTXxN8We2BADImfXfG8l6CBREc1vX6MLPbc12IBSSAAA5c9ft43HztaNZD4MCqNUjrrhgKEaHHR/N3HkNEHKkVm%2Bf5DY2lvVIyLPO%2BpBPvn9D3LCuHRZt%2BctcCQCQI43xiH32r8WzntNnESA71WpFjAy14irTRSyAphHkzP/7TSNuvm5U8WcHnUV/1WrEF87xyh8LIwBADl211pMdO6pUIsbHWvG%2BU%2B%2BPK789bN6fBfHjAzm0fu1w1kMgZzq7/d1241jc/avx9tfM%2B7MADgOCHNqyuRXr1w7HYccOZD0UcqDVnNwp8kuf2Gz/NrqiHn6UIJcEADoq1YgH7m3GO152b0TY7Y/uMAUAOXXtD0Zi04Pu8inrLPq79%2B5GXHmR3f7oLgEAcmzdZdYCpGrqa6Dnvn9DfP1fN2c7IEpHAIAcsxgwbffe3YiPvPOBuOOWsajZtYUuEwAgx37xs7G465dWfKek0/avVCJuWD8SN17d3umvMZ7hoCglmRJy7ubrRmO/x9e9852ITtv/g29/IG79iTMh6B23FMi5887dHG9ec0/Ww2ARNMYjNm9oxve%2BMRR3/XI8qu7Q9FDdW4CQb43xVoyPRlx7xUgcfFR/1sOhh2r1iOt/OBKf/ejGrIdCAkwBQM515v7Xrx0WAEqos8nPusuG4/ofjsR6b36wSDSYoCC8EVA%2BrdbkDn///tFNse7S4YlFgNBrAgAUyAf%2B/P740SWCQFlUKhG33zQWb1lzT2zZ1IxaLesRkRJnAUBBVCoRt94wFhs3bInnHjcwbX94imPqBj9DW1rxw0uGY2iofSceb2Q4MJJjDQAURKc1/Ls7x%2BPm60Zj/yfUY/lKCaBoOsX/nPc%2BGNf%2BwLHPZMfdAwroQ2c8EP/rHzZERJgzLqDf3D4et/50LOthkDgdACioX/ysXUA6T5TkV6MRsenBZnzpE5vilutG44H7bOtI9nQAoKCGt7bi7067P/7zO%2B1FgbaKza9aLeLWn47Gj787rPiTG/WwExAUUqUacccto3HFhREHHdkfA4NaAXnRWei3ZWMz1n9vONZdNhy3XG9bX/Kl8rojficBQAl8%2BLyHxj77m9XLk7Pe/UBc/yML/cgnUwBQcJ1XAT/13zbEpV/fGhHtOWeyc9M1o/HF/7kpbrx61DG%2B5JYfTSi4zlbBt900FrfdNBbPP2HQdMAiazYjxkdb8fmzN8bN14/G7%2B%2BSwMg/AQBK5s1rfh/POLQ/TnztsjjgkL5oNsOpcj1WrUYMD7Xi8m8NZT0UmDUBAEqkUm13BG68aiR%2Be8d4nPPNh00U/85%2BAV4b7J7xsVasu6y9yO%2BGde25/krF3gwUg0WAUHIvft2yOPkNy6N/QOVfqPGxVtSXVOLaK4bj2itHYv3a4RgbdQulmAQAKKlabXIxYK0W8fwTl8Yb37MiGo1w6MwC3HHLWPzdaX/IehiwYA4DgpKaerBMoxnx/Qu2xqGrB%2BIZq/omvm59wOzd89tGrFs7HOvXDtk9hVKonHq4DgCkZK%2BH1%2BLVb98jnrNmICLaOwhWa9YGzGR4a2eOfyhuusZGPpSLAAAJe9Xb9ogTX7ts4p%2BbzXYQSD0MXHflSKy7bCjWrR2eeM0SykYAgARVq%2B1iHxGxpK8Sx71yaZz8huUT%2Bwd0pgamnl1fdrfdNBbrLm0X/Q1/UPUpPwEAErb9K2tHnjgYf/ruFVFfMr3qNxrtQFDUMLCzIHPP3Y1Yd%2BlwrFs7FL%2B5zWlKpEUAACJi%2BlsDq44eiD32rMaKh1TjpX%2B6PGr19v4ClWpMvEVQ1O7A8FBroujfdLV5fdIlAAATOhsJbe/okwfjDX%2B1Mm67aTSe/My%2BifMHIiZ/fyXjtwka47HDvvs//fFI3HL9aLzy9D3iuitHYv3aoVh32fDE9AekTAAAdqqzILDZjNhjz2pserAZy1dU4/hXL4vVLxuMn/xoJJ53/ODE75/aFej8/cR6guaOIWFnXYTtv779v7t9sb/37kY8bN/25gZ3/nysvXJ/7XDc97t2S2PZHtXYsknVh6kEAGC3drW9bf9gJV7/rhXx69vG4zlrBmLFntUYGW7Ffo%2Bvx/33NGKvh0/fdWimIBAxc3iIiGkbFw1tacVNV4/EIUcPxKYHm7F%2B7XD8%2BLLh%2BPlPR2P1y5bGr38xFrfdODbtz5264BGYVDn18LsFAGBOOlMFtXr7abyjf7ASI0PtW8pjn7IkfnXrWJzy5j3i8m9tjTe%2BZ2Vcd%2BVwnHTq8hgdacU3P7M5Djt2IPbZvx6bNzTjyQf2xQ3rRuLBPzTiyBOXxg3rRuI/vzsUP1s/Em98z8pYv7Y9b99qRjzxGX1x242T8/f234e5EwCArus8dc%2B0pmBqO76%2BpBLjY%2B1b0L6Pqcfdd7bTxEMeVosH7p35SN2pixWB%2BbMJKNB1nZb7TAsKp87Fd4p/rRYTxb9Wi50W/wjFH7rFWQBA5qaeWzCuwMOi0AEAgAQJAACQIAEAABIkAABAggQAAEiQAAAACaqH9wABIDk6AACQIAEAABJU/cK6fWc4jBMAKKsvrNt3pkM5AYCyEwAAIEH1iIiWVwEAICk6AACQIAEAABIkAABAggQAAEhQNSLii%2BseZS8AAEhAp%2BbrAABAggQAAEiQAAAACRIAACBBEwHAQkAAKLeptb4%2B7VfsCAwASZgWANR/AEiDNQAAkKBpAeBL660DAIAy2r7G6wAAQIIEAABIUH3HL1kKCABlt0MH4Evr97MOAABKZKbabgoAABIkAABAgmYMAKYBAKAcdlbTdQAAIEECAAAkaKcBwDQAABTbrmr5DPsATLIjAACUkykAAEjQLgPAeaYBAKCQdlfDdQAAIEGzesJ/1aF3WQ4AAAVx3lW77%2BDrAABAggQAAEjQrALAbFoJAED2Zluzd7kPwHSWAQBAWcx6CuC8q/bXBQCAHJtLrbYGAAASNKcAoAsAAPk01xo9hzUAbVYCAEDxzXkK4Mu6AACQK/OpzdYAAECC5hUAdAEAIB/mW5N1AAAgQfMOALoAAJCthdTiBXUAhAAAyMZCa7ApAABI0IIDgC4AACyubtReHQAASFDXnt5fueo3NgkEgB778tXd6bx3rQPQrQEBADPrZq01BQAACer6U/t/WfVrUwEA0GVfufrRXa3ZXe8AdHuAAJC6XtTWnkwBCAEA0B29qqnWAABAgnoWAHQBAGBhellLe9oBEAIAYH56XUN7PgUgBADA3CxG7bQGAAAStCgBQBcAAGZnsWrmonUAhAAA2LXFrJWLOgUgBADAzBa7Ri76GgAhAACmy6I2ZlaMX%2BHMAACIr2b0YJzZWwBZfWAAyIssa2HmRfgVh%2BgEAJCer16T7YNw5vsAZH0BAGCx5aH2ZT6AjlcccqdOAACl99VrHpOL2pt5B6AjLxcEAHolT7UuNwEgIl8XBgC6KW81LlcBICJ/FwgAFiqPtS13ASAinxcKAOYjrzUtlwEgIr8XDABmK8%2B1LLcBICLfFw4AdiXvNSzXASAi/xcQALZXhNqV%2BwFOZa8AAPKsCIW/ozAD7ThFCAAgh75WoOIfUYApgO0V7QIDUH5FrE2FG/BUugEAZKmIhb%2BjcB2AqYp84QEotqLXoEIHgIjifwMAKJ4y1J7Cf4CpTAkA0EtlKPwdhe8ATFWmbwwA%2BVK2GlOqDzPVKQfrBgCwcF%2B7tlyFv6OUH2qqUw7%2BlSAAwJx97drHlrpGlmoKYCZl/wYC0H0p1I7Sf8CpdAMA2JUUCn9HMh90KkEAgKlSKvwdyX3gqV4uCAAk7esJFv6OZD/4VIIAQFpSLvwdyV%2BAqQQBgHJT%2BCe5EDshDACUg6I/MxdlNwQBgGJS%2BHfNxZkDYQAg3xT92XOh5kkYAMgHRX9%2BXLQuEAYAFpeiv3AuYA8IBADdpeB3nwu6CAQCgLlR8HvPBc6IUADQpthnw0XPKQEBKAsFPp/%2BP7CqXZGge8PhAAAAAElFTkSuQmCC%22%2C%20%22sizes%22%3A%20%22512x512%22%2C%20%22type%22%3A%20%22image/png%22%2C%20%22purpose%22%3A%20%22any%20maskable%22%7D%5D%7D">
+<title>Нотный тренажёр — ноты, гаммы, аккорды, упражнения</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#e9ecf3; --card:#ffffff; --ink:#1f2330;
+    --violet:#6d4aff; --violet-d:#5333e0; --violet-soft:#efeaff;
+    --amber:#ffcf3f; --range:#dbeafe; --range-b:#7cb0ff;
+    --ok:#16a34a; --err:#ef4444; --muted:#8a90a2;
+    --tick-bg:#f4f5fb; --tick-chip:#ffffff; --tick-line:#e3e6ef;
+    --shadow:0 10px 30px rgba(30,35,60,.10); --radius:14px;
+    --ff:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--ff);color:var(--ink);-webkit-font-smoothing:antialiased;background:
+    radial-gradient(1200px 600px at 80% -10%, #f3f0ff 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 0%, #eafaf3 0%, transparent 55%), var(--bg);}
+  .app{max-width:1300px;margin:24px auto;padding:0 18px 60px}
+
+  .head{background:linear-gradient(120deg,#6d4aff,#8b5cf6 55%,#a855f7);color:#fff;border-radius:18px;
+        padding:20px 26px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .head h1{margin:0;font-size:22px;font-weight:800;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+  .head .sub{font-size:13.5px;opacity:.88;margin-top:3px;font-weight:500}
+  .badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:8px 14px;border-radius:30px;font-size:12.5px;font-weight:600}
+
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:18px;overflow:hidden}
+  .card-pad{padding:16px 18px}
+
+  .tabs{display:flex;gap:6px;background:#eef0f6;padding:6px;border-radius:14px;flex-wrap:wrap}
+  .tab{flex:1;min-width:120px;text-align:center;padding:11px 12px;border-radius:10px;font-weight:600;font-size:14.5px;cursor:pointer;color:#5b6173;transition:.15s;border:1px solid transparent}
+  .tab:hover{background:#fff}
+  .tab.on{background:#fff;color:var(--violet-d);box-shadow:0 2px 8px rgba(109,74,255,.18);border-color:#e6e0ff}
+
+  .presets{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .presets .plabel{font-size:12.5px;color:#7b8194;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-right:2px}
+  .pbtn{padding:8px 14px;border:1px solid #e0d6ff;background:#f6f2ff;color:var(--violet-d);border-radius:10px;cursor:pointer;font-weight:600;font-size:13.5px;transition:.13s}
+  .pbtn:hover{background:#ece3ff;transform:translateY(-1px)}
+
+  .controls{display:flex;align-items:center;gap:18px 24px;flex-wrap:wrap;margin-top:14px}
+  .ctl{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500}
+  .ctl label{color:#5b6173}
+  select{height:36px;border:1px solid #d6dae3;border-radius:9px;padding:0 30px 0 11px;font-size:14px;background:#fff;cursor:pointer;appearance:none;font-family:var(--ff);
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238a90a2'><path d='M2 4l4 4 4-4z'/></svg>");background-repeat:no-repeat;background-position:right 10px center}
+  .switch{position:relative;width:46px;height:26px;border-radius:14px;background:#cfd4df;cursor:pointer;transition:.18s;flex:none}
+  .switch::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.18s}
+  .switch.on{background:var(--violet)} .switch.on::after{left:22px}
+  input[type=range]{-webkit-appearance:none;height:6px;border-radius:6px;background:#dfe3ec;width:130px;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--violet);box-shadow:0 1px 4px rgba(109,74,255,.5)}
+  .gen{padding:11px 24px;font-size:15px;font-weight:700;border:none;border-radius:11px;color:#fff;cursor:pointer;background:linear-gradient(120deg,#6d4aff,#8b5cf6);box-shadow:0 6px 16px rgba(109,74,255,.35);transition:.15s}
+  .gen:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  .mode-panel{display:none} .mode-panel.on{display:flex}
+
+  .transport{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .tbtn{width:48px;height:46px;border:1px solid #e0e3ec;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#3a3f52;transition:.13s;box-shadow:0 2px 6px rgba(30,35,60,.05)}
+  .tbtn:hover{border-color:var(--violet);color:var(--violet-d);transform:translateY(-1px)}
+  .tbtn.on{background:var(--violet-soft);border-color:#cbb8ff;color:var(--violet-d)}
+  .tbtn svg{width:22px;height:22px;fill:currentColor}
+  .status{margin-left:auto;font-size:14px;color:var(--muted);font-weight:500}
+  .status b{color:var(--ok)}
+
+  .staff-wrap{position:relative;overflow-x:auto;background:linear-gradient(#fff,#fbfbfe);padding:8px 0;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+  .staff-stage{position:relative}
+  .staff-playhead{position:absolute;top:10px;bottom:16px;left:50%;width:3px;transform:translateX(-50%);background:linear-gradient(#a855f7,#6d4aff);box-shadow:0 0 14px 2px rgba(124,80,255,.45);border-radius:2px;pointer-events:none;z-index:4}
+  .staff-playhead::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%);border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid #a855f7}
+  .staff-wrap svg{display:block}
+  .staff-wrap::-webkit-scrollbar,.kb-scroll::-webkit-scrollbar{height:10px}
+  .staff-wrap::-webkit-scrollbar-thumb,.kb-scroll::-webkit-scrollbar-thumb{background:#cdd2de;border-radius:8px}
+
+  .ticker-card{background:#f4f5fb;border-radius:var(--radius);border:1px solid #e6e8f0}
+  .ticker-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;color:#5b6173}
+  .ticker-head .t{font-weight:700;font-size:14px;letter-spacing:.4px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+  .ticker-head .pos{font-size:13px;color:#8a90a2;font-weight:600}
+  .ticker-view{position:relative;height:164px;overflow:hidden}
+  .playhead{position:absolute;left:50%;top:0;bottom:0;width:3px;background:linear-gradient(#a855f7,#6d4aff);transform:translateX(-50%);z-index:6;box-shadow:0 0 14px 2px rgba(124,80,255,.35)}
+  .playhead::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-top:10px solid #a855f7}
+  .ticker-row{position:absolute;top:0;bottom:0;display:flex;align-items:center;transition:transform .28s cubic-bezier(.22,.61,.36,1);will-change:transform}
+  .tchip{width:96px;flex:none;height:128px;margin:0 4px;border-radius:14px;background:#fff;border:1px solid #e0e3ec;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#2a2e3d;transition:.25s;cursor:pointer;box-shadow:0 2px 8px rgba(30,35,60,.05);overflow:hidden}
+  .tchip .dur{font-size:16px;color:#9aa0b2;height:18px}
+  .tchip .name{font-size:26px;font-weight:800;letter-spacing:-.5px}
+  .tchip .oct{font-size:11px;color:#8a90a2;font-weight:600}
+  .tchip .sub{font-size:11px;color:#8a90a2;font-weight:600;text-align:center;line-height:1.2;padding:0 4px}
+  .tchip .fin{margin-top:2px;font-size:11px;color:#1f2330;background:var(--amber);border-radius:20px;padding:1px 8px;font-weight:800}
+  .tchip svg.mini{display:block}
+  .tchip.cur{background:linear-gradient(160deg,#7c50ff,#6d4aff);border-color:#a98cff;transform:scale(1.1);box-shadow:0 10px 26px rgba(109,74,255,.4);color:#fff}
+  .tchip.cur .dur,.tchip.cur .oct,.tchip.cur .sub{color:#ece6ff}
+  .tchip.cur svg.mini line{stroke:#d9ccff!important}
+  .tchip.cur svg.mini ellipse{fill:#fff!important;stroke:#fff!important}
+  .tchip.cur svg.mini text{fill:#fff!important}
+  .tchip.done{opacity:.5}
+  .ticker-foot{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 18px 16px}
+  .navbtn{display:flex;align-items:center;gap:8px;padding:13px 26px;border-radius:12px;border:none;cursor:pointer;font-weight:700;font-size:16px;transition:.14s}
+  .navbtn.prev{background:#e9ebf3;color:#3a3f52} .navbtn.prev:hover{background:#dfe2ee}
+  .navbtn.next{background:linear-gradient(120deg,#7c50ff,#a855f7);color:#fff;box-shadow:0 6px 16px rgba(124,80,255,.4)} .navbtn.next:hover{filter:brightness(1.07);transform:translateY(-1px)}
+  .navbtn svg{width:20px;height:20px;fill:currentColor}
+
+  .kb-scroll{overflow-x:auto;padding:14px 12px 18px}
+  .keyboard{position:relative;height:210px;border-radius:10px;background:#1c1f2e}
+  .wkey{position:absolute;top:0;bottom:0;background:linear-gradient(#fff,#eef0f5);border:1px solid #c7ccd8;border-top:none;border-radius:0 0 7px 7px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;cursor:pointer;transition:background .08s}
+  .wkey:hover{background:linear-gradient(#fff,#e3e6ee)}
+  .wkey.in-range{background:linear-gradient(#eef5ff,#cfe2ff)}
+  .wkey.active{background:linear-gradient(#fff3b0,#ffcf3f)!important;box-shadow:0 0 16px rgba(255,180,0,.6)}
+  .wkey .lbl{font-size:12px;font-weight:600;color:#3a3f52;padding-bottom:9px;pointer-events:none}
+  .wkey .octn{position:absolute;bottom:26px;font-size:9px;color:#aab0c0;font-weight:700;pointer-events:none}
+  .wkey.in-range .lbl{color:#16407a}
+  .keyboard.no-labels .lbl,.keyboard.no-labels .octn{display:none}
+  .bkey{position:absolute;top:0;height:60%;background:linear-gradient(#3a3f52,#11131d);border-radius:0 0 5px 5px;z-index:5;cursor:pointer;box-shadow:0 4px 5px rgba(0,0,0,.45)}
+  .bkey:hover{background:linear-gradient(#4a5069,#1b1e2b)}
+  .bkey.in-range{background:linear-gradient(#3858a0,#1b2c55)}
+  .bkey.active{background:linear-gradient(#fff3b0,#ffcf3f)!important;box-shadow:0 0 14px rgba(255,180,0,.8)}
+  .keyboard.shake{animation:shake .34s}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+  .selector h3{margin:0 0 10px;font-size:12.5px;color:#7b8194;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .chip{padding:8px 15px;border:1px solid #d6dae3;border-radius:22px;background:#f7f8fb;cursor:pointer;font-size:14px;font-weight:500;transition:.12s}
+  .chip:hover{background:#eef0f5}
+  .chip.sel{background:var(--range);border-color:var(--range-b);color:#16407a;font-weight:600}
+  .chip.all{background:#eafaf0;border-color:#9bdcb6;color:#15663b;font-weight:700}
+  .note-chip.sel{background:#ece3ff;border-color:#b69cf2;color:#4b277f}
+  .hint{font-size:13px;color:var(--muted);line-height:1.5}
+  .hint kbd{background:#eef0f5;border:1px solid #d6dae3;border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-family:var(--ff);font-size:12px;font-weight:600}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px;font-size:12.5px;color:#7b8194}
+  .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+  .tbtn,.pbtn,.gen,.navbtn,.tab,.chip,.switch,.wkey,.bkey,select,input{touch-action:manipulation}
+  @media (max-width:760px){
+    .app{margin:10px auto;padding:0 8px 40px}
+    .head{padding:14px 16px;border-radius:14px}
+    .head h1{font-size:18px}
+    .head .sub{font-size:12px}
+    .badge{display:none}
+    .card{margin-top:12px}
+    .card-pad{padding:12px}
+    .tabs{gap:5px;padding:5px}
+    .tab{min-width:0;flex:1 1 42%;padding:11px 6px;font-size:13.5px}
+    .controls{gap:12px 16px}
+    .ctl{font-size:13.5px}
+    .presets{gap:6px}
+    .pbtn{font-size:12.5px;padding:9px 11px}
+    .tbtn{width:46px;height:46px}
+    .gen{width:100%;padding:14px}
+    select,input[type=text]{font-size:16px;height:42px}      /* 16px — чтобы iOS не зумил поле */
+    input[type=range]{width:100%}
+    .ctl label{min-width:auto}
+    .navbtn{flex:1;justify-content:center;padding:16px 10px;font-size:16px}
+    .ticker-view{height:150px}
+    .tchip{width:84px;height:120px}
+    .tchip .name{font-size:24px}
+    .kb-scroll{padding:10px 8px 14px}
+    .keyboard{height:180px}
+    .legend{font-size:12px;gap:12px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="head">
+    <div>
+      <h1>🎹 Нотный тренажёр</h1>
+      <div class="sub">Читай ноты с экрана — играй на своём фортепиано. Ноты · гаммы · аккорды · упражнения · полный диапазон 88 клавиш.</div>
+    </div>
+    <div class="badge">Пробел — Play · ←/→ — листать ноты</div>
+  </div>
+
+  <div class="card card-pad">
+    <div class="tabs" id="tabs">
+      <div class="tab on" data-mode="random">🎲 Случайные ноты</div>
+      <div class="tab" data-mode="scale">🎼 Гаммы</div>
+      <div class="tab" data-mode="chord">🎵 Аккорды</div>
+      <div class="tab" data-mode="exercise">💪 Упражнения</div>
+      <div class="tab" data-mode="custom">✍️ Своя мелодия</div>
+    </div>
+
+    <div class="presets" id="presets">
+      <span class="plabel">Сценарии:</span>
+      <button class="pbtn" data-p="beginner">🔰 Новичок (с подсказками)</button>
+      <button class="pbtn" data-p="blind">🙈 Тренировка вслепую</button>
+      <button class="pbtn" data-p="run">🏃 Под бегущую строку</button>
+      <button class="pbtn" data-p="memory">🧠 На память (исчезают)</button>
+      <button class="pbtn" data-p="full">🌐 Весь диапазон</button>
+    </div>
+
+    <div class="controls mode-panel on" data-panel="random">
+      <div class="ctl"><label>🎵 Простые мелодии <span style="color:#a855f7;font-weight:700">бета</span></label><div class="switch" id="swMelody"></div></div>
+      <div class="ctl"><label>Длительности (доли)</label><div class="switch" id="swDur"></div></div>
+      <div class="ctl"><label>Разные октавы</label><div class="switch" id="swPitch"></div></div>
+      <div class="ctl"><label>Кол-во нот</label>
+        <select id="noteCount"><option selected>30</option><option>50</option><option>80</option></select></div>
+    </div>
+    <div class="controls mode-panel" data-panel="scale">
+      <div class="ctl"><label>Гамма / паттерн</label><select id="scalePattern" style="min-width:320px"></select></div>
+      <div class="ctl"><label>Тоника</label><select id="scaleTonic"></select></div>
+      <div class="ctl"><label>Тип</label><select id="scaleType">
+        <option value="major">Мажорная</option><option value="minor">Минорная (натур.)</option>
+        <option value="hminor">Минорная (гармон.)</option><option value="penta">Пентатоника</option><option value="chrom">Хроматическая</option></select></div>
+      <div class="ctl"><label>Направление</label><select id="scaleDir"><option value="up">Вверх</option><option value="down">Вниз</option><option value="both" selected>Вверх и вниз</option></select></div>
+    </div>
+    <div class="controls mode-panel" data-panel="chord">
+      <div class="ctl"><label>Тип аккордов</label>
+        <div class="chips" id="chordQual" style="margin:0">
+          <div class="chip sel" data-q="major">Мажорные</div><div class="chip sel" data-q="minor">Минорные</div>
+          <div class="chip" data-q="dim">Уменьшённые</div><div class="chip" data-q="dom7">Септаккорды</div></div></div>
+      <div class="ctl"><label>Кол-во</label><select id="chordCount"><option>4</option><option selected>6</option><option>8</option></select></div>
+    </div>
+    <div class="controls mode-panel" data-panel="exercise">
+      <div class="ctl"><label>Упражнение</label><select id="exerciseSel" style="min-width:320px"></select></div>
+      <div class="ctl"><span id="exDesc" class="hint"></span></div>
+    </div>
+    <div class="controls mode-panel" data-panel="custom">
+      <div class="ctl" style="flex:1 1 100%;align-items:center;flex-wrap:wrap">
+        <label>Своя мелодия буквами</label>
+        <input type="text" id="userMel" placeholder="A–G, H = До след. октавы, # — диез, цифра — октава (A5), /2 — длительность. Пример: C D E F G A H" style="flex:1;min-width:240px;height:38px;border:1px solid #d6dae3;border-radius:9px;padding:0 11px;font-family:var(--ff);font-size:14px">
+        <button class="pbtn" id="btnUserMel">Загрузить</button>
+        <button class="pbtn" id="btnUserClear" style="background:#f2f3f7;border-color:#dcdfe8;color:#5b6173">Очистить</button>
+      </div>
+      <div class="ctl" style="flex:1 1 100%">
+        <button class="pbtn all" id="btnFullRange" style="background:#eafaf0;border-color:#9bdcb6;color:#15663b">🌐 Весь диапазон (88 клавиш)</button>
+        <span class="hint">Включает все октавы для тренировки случайных нот и мелодий.</span>
+      </div>
+    </div>
+
+    <div class="controls" style="border-top:1px solid #eef0f5;margin-top:16px;padding-top:14px">
+      <div class="ctl"><label>Темп / скорость</label><button class="pbtn" id="bpmMinus" style="padding:8px 14px;font-size:18px;line-height:1">−</button><input type="range" id="bpm" min="30" max="160" value="80"><button class="pbtn" id="bpmPlus" style="padding:8px 14px;font-size:18px;line-height:1">+</button><span id="bpmLbl" style="font-weight:700;color:var(--violet-d);width:62px">80 BPM</span></div>
+      <div class="ctl"><label>🔊 Звук компьютера</label><div class="switch on" id="swSound"></div></div>
+      <div class="ctl"><label>🎼 Ключ / стан</label><select id="clefSel"><option value="treble">Скрипичный</option><option value="bass">Басовый</option><option value="grand" selected>Оба (грандстан)</option></select></div>
+      <div class="ctl"><label>💡 Подсказки</label><div class="switch on" id="swHints"></div></div>
+      <div class="ctl"><label>Подписи клавиш</label><div class="switch on" id="swLabels"></div></div>
+      <div class="ctl"><label>Исчезающие ноты</label><div class="switch" id="swFade"></div></div>
+      <div class="ctl"><label>Проверять нажатия</label><div class="switch" id="swDetect"></div></div>
+      <div class="ctl"><label>В строке</label><select id="chipMode"><option value="name">Названия нот</option><option value="staff">Ноты на стане</option></select></div>
+      <button class="pbtn" id="btnSwap">⇅ Поменять: стан ↔ строка</button>
+      <button class="gen" id="btnGen">Генерировать</button>
+    </div>
+
+    <div class="controls" id="viewToggles" style="border-top:1px solid #eef0f5;margin-top:6px;padding-top:14px;align-items:center">
+      <span class="plabel" style="font-weight:700;color:var(--violet-d)">👁 Показывать на экране:</span>
+      <div class="chip vt sel" data-view="staff">Нотный стан</div>
+      <div class="chip vt sel" data-view="ticker">Читай-играй</div>
+      <div class="chip vt sel" data-view="keyboard">Клавиатура</div>
+      <div class="chip vt sel" data-view="selector">Меню выбора</div>
+      <div class="chip vt sel" data-view="explain">Пояснения</div>
+      <button class="pbtn" id="btnFocus" style="margin-left:auto;background:#1d1f2b;border-color:#1d1f2b;color:#fff">🎯 Только тренировка</button>
+    </div>
+  </div>
+
+  <div class="card" id="staffCard">
+    <div class="card-pad" style="padding-bottom:0;display:flex;align-items:center;gap:10px">
+      <span class="selector"><h3 style="margin:0">Нотный стан</h3></span>
+      <div class="transport" style="margin:0 0 0 auto">
+        <div class="tbtn" id="btnPlay" title="Играть / Пауза"><svg viewBox="0 0 24 24"><path id="playIcon" d="M8 5v14l11-7z"/></svg></div>
+        <div class="tbtn" id="btnStop" title="Стоп"><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg></div>
+        <div class="tbtn" id="btnPrev" title="Назад"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6L18 6v12z"/></svg></div>
+        <div class="tbtn" id="btnNext" title="Далее"><svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg></div>
+        <div class="tbtn" id="btnLoop" title="Повтор"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V4h12V1zM7 23l-4-4 4-4v3h10v-4h2v6H7v3z"/></svg></div>
+        <div class="tbtn" id="btnMetro" title="Метроном"><svg viewBox="0 0 24 24"><path d="M12 2l4 18H8L12 2zm0 6l-2 9h4l-2-9z"/></svg></div>
+        <button class="pbtn" id="btnRestart" style="margin-left:6px">↻ Заново</button>
+        <span class="status" id="status"></span>
+      </div>
+    </div>
+    <div class="staff-stage">
+      <div class="staff-wrap" id="staffWrap"><svg id="staff" height="230" width="1200"></svg></div>
+      <div class="staff-playhead"></div>
+    </div>
+  </div>
+
+  <div class="card ticker-card" id="tickerCard">
+    <div class="ticker-head"><div class="t">▶ Строка нот — читай и играй</div><div class="pos" id="tickerPos">—</div></div>
+    <div class="ticker-view" id="tickerView"><div class="playhead"></div><div class="ticker-row" id="tickerRow"></div></div>
+    <div class="ticker-foot">
+      <button class="navbtn prev" id="navPrev"><svg viewBox="0 0 24 24"><path d="M14 6l-8.5 6L14 18z"/></svg> Назад</button>
+      <button class="navbtn next" id="navNext">Далее <svg viewBox="0 0 24 24"><path d="M10 6l8.5 6L10 18z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="card" id="kbCard">
+    <div class="card-pad" style="padding-bottom:0"><span class="selector"><h3 style="margin:0">Клавиатура — все 88 клавиш (прокрутка)</h3></span></div>
+    <div class="kb-scroll" id="kbScroll"><div class="keyboard" id="keyboard"></div></div>
+  </div>
+
+  <div class="card card-pad selector" id="selectorCard">
+    <div id="selChips">
+      <h3>Октавы для тренировки (режим «Случайные ноты» и корни аккордов)</h3>
+      <div class="chips" id="octChips">
+        <div class="chip" data-oct="0">Субконтр.</div><div class="chip" data-oct="1">Контр.</div>
+        <div class="chip" data-oct="2">Большая</div><div class="chip" data-oct="3">Малая</div>
+        <div class="chip sel" data-oct="4">Первая</div><div class="chip" data-oct="5">Вторая</div>
+        <div class="chip" data-oct="6">Третья</div><div class="chip" data-oct="7">Четвёртая</div>
+      </div>
+      <div class="chips" id="noteChips">
+        <div class="chip note-chip sel" data-note="C">До</div><div class="chip note-chip sel" data-note="D">Ре</div>
+        <div class="chip note-chip sel" data-note="E">Ми</div><div class="chip note-chip sel" data-note="F">Фа</div>
+        <div class="chip note-chip sel" data-note="G">Соль</div><div class="chip note-chip sel" data-note="A">Ля</div>
+        <div class="chip note-chip sel" data-note="B">Си</div><div class="chip note-chip" data-note="black">+ чёрные клавиши</div>
+      </div>
+    </div>
+    <div id="explainBlock">
+      <div class="legend">
+        <span><i style="background:linear-gradient(#fff3b0,#ffcf3f)"></i>активная нота (только при подсказках)</span>
+        <span><i style="background:#cfe2ff"></i>тренируемый диапазон</span>
+        <span><i style="background:#6d4aff"></i>линия чтения на стане</span>
+      </div>
+      <div class="hint" style="margin-top:10px">
+        <b>Подсказки</b> выкл. → пропадают жёлтая подсветка клавиш, имена нот и строка «читай-играй»: остаётся только нотный стан — читаете сами.
+        <b>Исчезающие ноты</b> → сыгранные ноты в строке гаснут, дальние затуманены (тренировка чтения вперёд и памяти).
+        <b>Нажатие правильной ноты</b> — мышью/тапом или клавишами ПК (<kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>F</kbd> <kbd>G</kbd> <kbd>H</kbd> <kbd>J</kbd> = До…Си первой октавы) — переводит на следующую ноту.
+        <b>Проверять нажатия</b> → строгий режим: неверная клавиша даёт ошибку.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ===== НОТНЫЙ ТРЕНАЖЁР v3 ===== */
+const DIA=['C','D','E','F','G','A','B'];
+const SHARP_LETTER=['C','C','D','D','E','F','F','G','G','A','A','B'];
+const IS_SHARP=[0,1,0,1,0,0,1,0,1,0,1,0];
+const SEMI={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+const RU={C:'До',D:'Ре',E:'Ми',F:'Фа',G:'Соль',A:'Ля',B:'Си'};
+const OCT_RU={0:'субконтр.',1:'контр.',2:'большая',3:'малая',4:'1-я',5:'2-я',6:'3-я',7:'4-я',8:'5-я'};
+const DUR_GLYPH={whole:'𝅝',half:'𝅗𝅥',quarter:'♩',eighth:'♪',sixteenth:'𝅘𝅥𝅯'};
+const LO=21, HI=108;                                   // диапазон фортепиано: A0..C8 (88 клавиш)
+
+function partsFromMidi(m){const pc=((m%12)+12)%12;return{letter:SHARP_LETTER[pc],sharp:!!IS_SHARP[pc],octave:Math.floor(m/12)-1};}
+function midiFromName(n){const x=n.match(/^([A-G])(#?)(-?\d+)$/);return (parseInt(x[3],10)+1)*12+SEMI[x[1]]+(x[2]?1:0);}
+function diatonicStep(m){const p=partsFromMidi(m);return p.octave*7+DIA.indexOf(p.letter);}
+function ruName(m){const p=partsFromMidi(m);return RU[p.letter]+(p.sharp?'♯':'');}
+function octRu(n){return OCT_RU[n]!==undefined?OCT_RU[n]:String(n);}
+function midiToFreq(m){return 440*Math.pow(2,(m-69)/12);}
+
+// ---- аудио ----
+let actx=null;
+function audio(){if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();return actx;}
+function tone(m,dur=.5,type='triangle',vol=.22,delay=0){if(muted)return;const ac=audio(),t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();
+  o.type=type;o.frequency.value=midiToFreq(m);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.02);
+  g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+dur+.03);}
+function buzz(){const ac=audio(),o=ac.createOscillator(),g=ac.createGain();o.type='square';o.frequency.value=110;
+  g.gain.setValueAtTime(.18,ac.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.25);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+.27);}
+function clickSnd(){const ac=audio(),o=ac.createOscillator(),g=ac.createGain();o.type='square';o.frequency.value=1500;
+  g.gain.setValueAtTime(.12,ac.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.05);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+.06);}
+function soundItem(it){it.midis.forEach((m,i)=>tone(m,beatSec()*it.dur*.95,'triangle',.2,i*.012));}
+
+// ---- данные ----
+const SCALES={major:[0,2,4,5,7,9,11,12],minor:[0,2,3,5,7,8,10,12],hminor:[0,2,3,5,7,8,11,12],penta:[0,2,4,7,9,12],chrom:[0,1,2,3,4,5,6,7,8,9,10,11,12]};
+const CHORDS={major:[0,4,7],minor:[0,3,7],dim:[0,3,6],dom7:[0,4,7,10]};
+const CHORD_RU={major:'маж',minor:'мин',dim:'ум',dom7:'7'};
+const LETTER_PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11,H:0};   // A=Ля, B=Си, H=До СЛЕДУЮЩЕЙ октавы
+const PATTERNS=[
+ {id:'gen',name:'Гамма по настройкам (тоника / тип / направление)'},
+ {id:'cmaj',name:'Гамма До мажор (вверх)',str:'CDEFGABH'},
+ {id:'cmaj2',name:'Гамма До мажор (вверх-вниз)',str:'CDEFGABHBAGFEDC'},
+ {id:'p1',name:'До-Ми-Ре-Фа-Ми-Соль-Фа-Ре',str:'CEDFEGFD'},
+ {id:'p2',name:'Соль-Фа-Ре-Ми-До-Фа-Ми-Ре (GFDECFED)',str:'GFDECFED'},
+ {id:'p3',name:'До₂-Си-Ля-Соль-Фа-Ми-Ре-До (HCBAGFEDC)',str:'HCBAGFEDC'},
+ {id:'p4',name:'До₂-Ля-Си-Соль-Ля-Фа-Соль (HCABGAFG)',str:'HCABGAFG'},
+ {id:'p5',name:'До₂-Соль-Ля-Соль-Си-Ля-Соль (HCGAGBAG)',str:'HCGAGBAG'}
+];
+function patternToMidis(str){const out=[];let prev=null;
+  for(const ch of str){const pc=LETTER_PC[ch];if(pc===undefined)continue;
+    let m;
+    if(prev===null){const baseOct=(ch==='H')?5:4;m=(baseOct+1)*12+pc;}   // H первой нотой — сразу 2-я октава
+    else{let best=null;for(let o=1;o<=7;o++){const c=(o+1)*12+pc;if(best===null||Math.abs(c-prev)<Math.abs(best-prev))best=c;}m=best;}
+    if(out.length&&out[out.length-1]===m){prev=m;continue;}              // схлопываем соседнее задвоенное До
+    out.push(m);prev=m;}
+  return out;}
+// Разбор пользовательской мелодии: буквы A–G, H=До след. октавы, # — диез,
+// можно цифру октавы (C4) и длительность (C/2). Пробелы не обязательны.
+function parseUserMelody(str){
+  const out=[];let i=0;const S=(str||'').trim();
+  while(i<S.length){
+    const ch=S[i];
+    if(/\s/.test(ch)){i++;continue;}
+    const L=ch.toUpperCase();
+    if(LETTER_PC[L]===undefined){i++;continue;}
+    let pc=LETTER_PC[L];i++;
+    if(S[i]==='#'||S[i]==='♯'){pc++;i++;}
+    let oct=null; if(/\d/.test(S[i])){oct=parseInt(S[i],10);i++;}
+    let dur=1; if(S[i]==='/'){i++;let num='';while(i<S.length&&/[\d.]/.test(S[i])){num+=S[i];i++;}dur=parseFloat(num)||1;}
+    // Без авто-смещения: A–G — первая октава, H — До второй, цифра задаёт октаву вручную
+    let m = (oct!==null) ? (oct+1)*12+pc : (L==='H' ? (5+1)*12+pc : (4+1)*12+pc);
+    const dn=dur>=4?'whole':dur>=2?'half':dur>=1?'quarter':'eighth';
+    out.push({midis:[m],dur:dur,durName:dn});
+  }
+  return out;
+}
+// Мелодии заданы в полутонах от До нижней выбранной октавы (относительно),
+// чтобы укладываться ровно в выбранное число октав. "/доли" — длительность.
+// Только общественное достояние и оригинальные мелодии.
+function buildRel(str,base){return str.trim().split(/\s+/).map(tok=>{
+  const a=tok.split('/'),off=parseInt(a[0],10),beats=a[1]?parseFloat(a[1]):1;
+  const dn=beats>=4?'whole':beats>=2?'half':beats>=1?'quarter':'eighth';
+  return {midis:[base+off],dur:beats,durName:dn};});}
+function melMaxOff(r){return Math.max.apply(null,r.trim().split(/\s+/).map(t=>parseInt(t,10)));}
+const MELSET={
+ 1:[
+  {n:'Мерцай, звёздочка',r:'0 0 7 7 9 9 7/2 5 5 4 4 2 2 0/2 7 7 5 5 4 4 2/2 7 7 5 5 4 4 2/2 0 0 7 7 9 9 7/2 5 5 4 4 2 2 0/2'},
+  {n:'Ода к радости (Бетховен)',r:'4 4 5 7 7 5 4 2 0 0 2 4 4/1.5 2/.5 2/2 4 4 5 7 7 5 4 2 0 0 2 4 2/1.5 0/.5 0/2'},
+  {n:'Jingle Bells',r:'4 4 4/2 4 4 4/2 4 7 0 2 4/2 5 5 5 5 5 4 4 4 4 2 2 4 2/2 7/2 4 4 4/2 4 4 4/2 4 7 0 2 4/2 5 5 5 5 5 4 4 4 7 7 5 2 0/2'},
+  {n:'Oh, Susanna',r:'0 2 4 7 7 9 7 4 0 2 4 4 2 0 2/2 0 2 4 7 7 9 7 4 0 2 4 4 2 2 0/2 5 5 9 9 7 5 4 4 0 2 4 4 2 0 2/2'},
+  {n:'Лондонский мост',r:'7 9 7 5 4 5 7/2 2 4 5/2 4 5 7/2 7 9 7 5 4 5 7/2 2/2 7/2 0/2'},
+  {n:'Дед Макдональд',r:'7 7 7 2 4 4 2/2 11 11 9 9 7/2 7 7 7 2 4 4 2 11 11 9 9 7/2'},
+  {n:'When the Saints',r:'0 4 5 7/2 0 4 5 7/2 0 4 5 7 4 0 4 2/2 4 4 2 0 4 7 7 5/2 4 5 7 4 0 2 0/2'},
+  {n:'У Мэри был барашек',r:'4 2 0 2 4 4 4/2 2 2 2/2 4 7 7/2 4 2 0 2 4 4 4 4 2 2 4 2 0/2'},
+  {n:'Братец Яков',r:'0 2 4 0 0 2 4 0 4 5 7/2 4 5 7/2 7 9 7 5 4 0 7 9 7 5 4 0 0 7 0/2 0 7 0/2'},
+  {n:'Лесная тропинка',r:'0 2 4 5 7 5 4 2 0 4 7 4 0 2 4 5 7 9 11 12/2 11 9 7 5 4 2 0/2'}
+ ],
+ 2:[
+  {n:'Гамма 2 октавы',r:'0 2 4 5 7 9 11 12 14 16 17 19 21 23 24/2 23 21 19 17 16 14 12 11 9 7 5 4 2 0/2'},
+  {n:'Арпеджио 2 октавы',r:'0 4 7 12 16 19 24/2 19 16 12 7 4 0/2 0 5 9 12 17 21 24/2 21 17 12 9 5 0/2 0 7 12 16 12 7 0/2'},
+  {n:'Ода к радости (две октавы)',r:'4 4 5 7 7 5 4 2 0 0 2 4 4 2 2/2 16 16 17 19 19 17 16 14 12 12 14 16 14 12/2'},
+  {n:'Радость миру (Joy to the World)',r:'12 11 9 7 5 4 2 0 0/.5 2/.5 4/.5 5/.5 7/2 7/.5 9/.5 11/.5 12/.5 9 7 5 4/2 0 7 12 19 24/2 19 12 7 0/2'},
+  {n:'Перекличка октав',r:'0 2 4 5 12 14 16 17 7 5 4 2 19 17 16 14 0 12 0 12 0/2'},
+  {n:'Бегущие пальцы',r:'0 4 2 5 4 7 5 9 7 11 9 12 11 14 12 16 14 17 16 19 19 16 17 14 16 12 14 11 12 9 11 7 9 5 7 4 5 2 4 0/2'},
+  {n:'Колокола',r:'0 12 2 14 4 16 5 17 7 19 19 7 17 5 16 4 14 2 12 0/2'},
+  {n:'Прогулка по лесенке',r:'0 2 4 2 4 5 7 5 7 9 11 9 11 12 14 12 14 16 17 16 17 19 21 19 21 23 24/2 12 0/2'},
+  {n:'Танец',r:'0/.5 4/.5 7/.5 4/.5 0 7/.5 12/.5 7/.5 0 12/.5 16/.5 12/.5 7 19/.5 16/.5 12/.5 7 4 0/2'},
+  {n:'Волна',r:'0 4 7 12 9 7 4 7 11 14 12 9 7 11 16 19 17 14 12 16 21 24 21 19 16 12 7 0/2'}
+ ],
+ 3:[
+  {n:'Гамма 3 октавы',r:'0 2 4 5 7 9 11 12 14 16 17 19 21 23 24 26 28 29 31 33 35 36/2 35 33 31 29 28 26 24 23 21 19 17 16 14 12 11 9 7 5 4 2 0/2'},
+  {n:'Арпеджио 3 октавы',r:'0 4 7 12 16 19 24 28 31 36/2 31 28 24 19 16 12 7 4 0/2'},
+  {n:'Каскад',r:'36 31 28 24 19 16 12 7 4 0 4 7 12 16 19 24 28 31 36/2 24 12 0/2'},
+  {n:'Большая волна',r:'0 7 12 19 24 31 36 31 24 19 12 7 0 5 12 17 24 29 36 29 24 17 12 5 0/2'},
+  {n:'Лестница',r:'0 4 2 5 4 7 5 9 7 11 9 12 11 14 12 16 14 17 16 19 17 21 19 23 21 24 23 26 24 28 26 29 28 31 29 33 31 35 33 36/2'},
+  {n:'Перезвон',r:'0 12 24 12 0 2 14 26 14 2 4 16 28 16 4 5 17 29 17 5 7 19 31 19 7 12 24 36 24 12 0/2'},
+  {n:'Вихрь',r:'0/.5 4/.5 7/.5 12/.5 16/.5 19/.5 24/.5 28/.5 31/.5 36/2 31/.5 28/.5 24/.5 19/.5 16/.5 12/.5 7/.5 4/.5 0/2'},
+  {n:'Эхо гор',r:'0 7 0 12 7 12 19 12 19 24 19 24 31 24 31 36 31/2 24 19 12 7 0/2'},
+  {n:'Радуга',r:'0 2 4 7 12 16 19 24 28 31 36 33 29 26 21 17 14 9 5 2 0 4 9 16 24 31 36/2 0/2'},
+  {n:'Ода к радости (три регистра)',r:'4 4 5 7 7 5 4 2 0 16 16 17 19 19 17 16 14 12 28 28 29 31 31 29 28 26 24/2 12 0/2'}
+ ]
+};
+let melName='';
+function genMelody(){
+  const octs=[...sel.octaves].sort((a,b)=>a-b);
+  const cnt=Math.min(3,Math.max(1,octs.length||1));
+  let lowest=octs.length?octs[0]:4;
+  const list=MELSET[cnt], mel=list[Math.floor(Math.random()*list.length)];
+  let base=(lowest+1)*12;
+  if(base<24) base=24;
+  const maxOff=melMaxOff(mel.r);
+  if(base+maxOff>108) base=Math.max(24,108-Math.ceil(maxOff/12)*12);
+  curClef = base<55?'bass':'treble';
+  melName=mel.n+' · '+cnt+' окт.';
+  return buildRel(mel.r,base);
+}
+const EXERCISES=[
+ {name:'Пять пальцев — правая рука',clef:'treble',desc:'1-й палец на До первой октавы. Каждый палец на своей клавише.',
+  seq:[['C4',1],['D4',2],['E4',3],['F4',4],['G4',5],['F4',4],['E4',3],['D4',2],['C4',1]]},
+ {name:'Пять пальцев — левая рука',clef:'bass',desc:'5-й палец (мизинец) на До малой октавы. Зеркально правой.',
+  seq:[['C3',5],['D3',4],['E3',3],['F3',2],['G3',1],['F3',2],['E3',3],['D3',4],['C3',5]]},
+ {name:'Гамма До мажор — правая рука (1 окт.)',clef:'treble',desc:'Подкладывание 1-го пальца на Фа. Вниз — перенос 3-го через 1-й.',
+  seq:[['C4',1],['D4',2],['E4',3],['F4',1],['G4',2],['A4',3],['B4',4],['C5',5],['B4',4],['A4',3],['G4',2],['F4',1],['E4',3],['D4',2],['C4',1]]},
+ {name:'Гамма До мажор — левая рука (1 окт.)',clef:'bass',desc:'Вверх: 5-4-3-2-1-3-2-1. Перенос 3-го пальца через 1-й на Соль.',
+  seq:[['C3',5],['D3',4],['E3',3],['F3',2],['G3',1],['A3',3],['B3',2],['C4',1],['B3',2],['A3',3],['G3',1],['F3',2],['E3',3],['D3',4],['C3',5]]},
+ {name:'Арпеджио До мажор — правая рука',clef:'treble',desc:'Звуки До-Ми-Соль по очереди. Ровный звук, расслабленная кисть.',
+  seq:[['C4',1],['E4',2],['G4',3],['C5',5],['G4',3],['E4',2],['C4',1]]},
+ {name:'Трезвучия по гамме До мажор — правая рука',clef:'treble',desc:'Аккорды ступеней, пальцами 1-3-5, играть вместе.',
+  chords:[['C4','E4','G4'],['D4','F4','A4'],['E4','G4','B4'],['F4','A4','C5'],['G4','B4','D5'],['A4','C5','E5'],['B4','D5','F5'],['C5','E5','G5']],fin:'1-3-5'}
+];
+
+// ---- состояние ----
+let mode='random', seq=[], idx=0, looping=false, playing=false, metro=false, timer=null;
+let hintsOn=true, labelsOn=true, fadeOn=false, detectionOn=false, muted=false;
+const views={staff:true,ticker:true,keyboard:true,selector:true,explain:true};
+let pressed=new Set(), curClef='treble', rangeSet=new Set();
+const sel={octaves:new Set([4]),notes:new Set(DIA),black:false};
+const $=id=>document.getElementById(id);
+function bpm(){return +$('bpm').value;} function beatSec(){return 60/bpm();}
+function status(t,ok){$('status').innerHTML=ok?('<b>'+t+'</b>'):t;}
+
+// ---- генерация ----
+function pickClef(a){const c=$('clefSel').value;return (c==='treble'||c==='bass')?c:a;}
+function buildPool(){
+  let octs=[...sel.octaves].sort((a,b)=>a-b); if(!octs.length)octs=[4];
+  if(!$('swPitch').classList.contains('on')) octs=[octs[0]];
+  const pool=[];
+  octs.forEach(o=>{
+    DIA.forEach(l=>{const m=midiFromName(l+o); if(sel.notes.has(l)&&m>=LO&&m<=HI) pool.push(m);});
+    if(sel.black) ['C#','D#','F#','G#','A#'].forEach(b=>{const m=midiFromName(b+o); if(m>=LO&&m<=HI) pool.push(m);});
+  });
+  return pool.length?pool:[60];
+}
+function measureRhythm(on){
+  if(!on) return [['quarter',1],['quarter',1],['quarter',1],['quarter',1]];
+  const opts=[['whole',4],['half',2],['quarter',1],['eighth',.5]];const out=[];let rem=4;
+  while(rem>.001){const fit=opts.filter(o=>o[1]<=rem+.001);const p=fit[Math.floor(Math.random()*fit.length)];out.push(p);rem-=p[1];}
+  return out;
+}
+function genRandom(){
+  const pool=buildPool(),durOn=$('swDur').classList.contains('on');
+  const target=+$('noteCount').value;
+  const med=pool.slice().sort((a,b)=>a-b)[Math.floor(pool.length/2)];
+  curClef=pickClef(med<60?'bass':'treble');
+  const out=[];let beat=0,bar=1;
+  while(out.length<target){
+    let dur,dn;
+    if(!durOn){dur=1;dn='quarter';}
+    else{const rem=4-beat;const opts=[['whole',4],['half',2],['quarter',1],['eighth',.5]].filter(o=>o[1]<=rem+.001);
+      const p=opts[Math.floor(Math.random()*opts.length)];dn=p[0];dur=p[1];}
+    out.push({midis:[pool[Math.floor(Math.random()*pool.length)]],dur:dur,durName:dn,first:beat<.001,bar:bar});
+    beat+=dur; if(beat>=4-.001){beat=0;bar++;}
+  }
+  return out;
+}
+function genScale(){
+  const pat=$('scalePattern').value;
+  if(pat&&pat!=='gen'){
+    const P=PATTERNS.find(p=>p.id===pat); curClef=pickClef('treble');
+    return patternToMidis(P.str).map(m=>({midis:[m],dur:1,durName:'quarter'}));
+  }
+  const tonic=+$('scaleTonic').value,iv=SCALES[$('scaleType').value],dir=$('scaleDir').value;
+  curClef=pickClef(tonic<55?'bass':'treble');
+  const notes=iv.map(s=>tonic+s);
+  const line=dir==='up'?notes:dir==='down'?[...notes].reverse():notes.concat([...notes].reverse().slice(1));
+  return line.map(m=>({midis:[m],dur:1,durName:'quarter'}));
+}
+function genChords(){
+  const quals=[...document.querySelectorAll('#chordQual .chip.sel')].map(c=>c.dataset.q);
+  const qs=quals.length?quals:['major','minor'],count=+$('chordCount').value;
+  let roots=buildPool().filter(m=>m<76); if(!roots.length)roots=[60,62,64,65,67];
+  curClef=pickClef('treble');const out=[];
+  for(let i=0;i<count;i++){const root=roots[Math.floor(Math.random()*roots.length)],q=qs[Math.floor(Math.random()*qs.length)];
+    out.push({midis:CHORDS[q].map(s=>root+s),dur:2,durName:'half',chordQ:q,root});}
+  return out;
+}
+function loadExercise(){
+  const ex=EXERCISES[+$('exerciseSel').value]; curClef=pickClef(ex.clef);
+  if(ex.chords) return ex.chords.map(ns=>({midis:ns.map(midiFromName),dur:2,durName:'half',finger:ex.fin}));
+  return ex.seq.map(([n,f])=>({midis:[midiFromName(n)],dur:1,durName:'quarter',finger:f}));
+}
+function enrich(it){
+  if(it.midis.length>1){it.label=it.chordQ?ruName(it.root)+' '+CHORD_RU[it.chordQ]:ruName(it.midis[0])+' акк.';
+    it.sub=it.midis.map(ruName).join('·');it.oct='';}
+  else{const p=partsFromMidi(it.midis[0]);it.label=RU[p.letter]+(p.sharp?'♯':'');it.oct=p.octave;it.sub='';}
+}
+function loadUserMelody(){
+  const s=parseUserMelody($('userMel').value);
+  if(!s.length){status('Не распознал ноты. Буквы A–G, H = До след. октавы, # — диез. Пример: C D E F G A H');return;}
+  stopPlay(); curClef=pickClef('treble');
+  seq=s; seq.forEach(enrich);
+  rangeSet=new Set(); seq.forEach(it=>it.midis.forEach(m=>rangeSet.add(m)));
+  idx=0; pressed.clear();
+  renderStaff(); renderTicker(); renderKeyboard(); setIndex(0,false); scrollToRange();
+  status('Своя мелодия загружена · '+seq.length+' нот');
+}
+function generate(){
+  audio();
+  if(mode==='custom'){ if($('userMel').value.trim()) loadUserMelody(); else status('Впишите ноты буквами и нажмите «Загрузить»'); return; }
+  if(mode==='random') seq = $('swMelody').classList.contains('on')?genMelody():genRandom();
+  else seq = mode==='scale'?genScale():mode==='chord'?genChords():loadExercise();
+  seq.forEach(enrich);
+  rangeSet=new Set(); seq.forEach(it=>it.midis.forEach(m=>rangeSet.add(m)));
+  idx=0; pressed.clear();
+  renderStaff(); renderTicker(); renderKeyboard();
+  setIndex(0,false); scrollToRange();
+  const melTag=(mode==='random'&&$('swMelody').classList.contains('on'))?' · «'+melName+'»':'';
+  status('Готово · '+seq.length+(mode==='chord'?' аккордов':' нот')+melTag);
+}
+
+// ---- нотный стан (грандстан: скрипичный + басовый ключи) ----
+const WIDTHS={whole:150,half:110,quarter:78,eighth:52,sixteenth:44};
+const START_X=120;
+const GS_TOP=34, GS_HALF=5.5;                       // верхняя линия скрипичного = F5 (шаг 38)
+function gy(step){return GS_TOP+(38-step)*GS_HALF;}
+const TREB_LINES=[38,36,34,32,30], BASS_LINES=[26,24,22,20,18];
+const LABEL_Y=212;
+function ledger(x,st){return '<line x1="'+(x-12)+'" y1="'+gy(st)+'" x2="'+(x+12)+'" y2="'+gy(st)+'" stroke="#2a2e3d" stroke-width="1.3"/>';}
+function gHead(x,m,dn){
+  const step=diatonicStep(m),y=gy(step),p=partsFromMidi(m),open=(dn==='whole'||dn==='half'),treble=m>=60;
+  let s='';
+  if(treble){ for(let st=28;st>=step;st-=2) s+=ledger(x,st); for(let st=40;st<=step;st+=2) s+=ledger(x,st); }
+  else{ for(let st=16;st>=step;st-=2) s+=ledger(x,st); for(let st=28;st<=step;st+=2) s+=ledger(x,st); }
+  if(p.sharp) s+='<text x="'+(x-21)+'" y="'+(y+6)+'" font-size="19" fill="#2a2e3d">♯</text>';
+  s+='<g transform="rotate(-18 '+x+' '+y+')"><ellipse cx="'+x+'" cy="'+y+'" rx="7" ry="5" fill="'+(open?'none':'#161821')+'" stroke="#161821" stroke-width="'+(open?2:1)+'"/></g>';
+  return {svg:s,y:y,step:step};
+}
+function staffMode(){const v=$('clefSel').value;return (v==='treble'||v==='bass'||v==='grand')?v:'grand';}
+function renderStaff(){
+  const wrap=$('staffWrap'); const half=Math.floor(wrap.clientWidth/2);
+  const startX=Math.max(START_X, half);
+  let total=startX; seq.forEach(n=>total+=WIDTHS[n.durName]); total+=half+40;
+  if(staffMode()==='grand') renderGrand(wrap,startX,total); else renderSingle(wrap,startX,total);
+  seq.forEach((n,i)=>n._x=n._px);
+}
+function renderGrand(wrap,startX,total){
+  let g='<svg id="staff" height="232" width="'+total+'">';
+  TREB_LINES.forEach(st=>g+='<line x1="46" y1="'+gy(st)+'" x2="'+(total-10)+'" y2="'+gy(st)+'" stroke="#2a2e3d" stroke-width="1.3"/>');
+  BASS_LINES.forEach(st=>g+='<line x1="46" y1="'+gy(st)+'" x2="'+(total-10)+'" y2="'+gy(st)+'" stroke="#2a2e3d" stroke-width="1.3"/>');
+  g+='<line x1="45" y1="'+gy(38)+'" x2="45" y2="'+gy(18)+'" stroke="#161821" stroke-width="2.5"/>';
+  g+='<text x="18" y="'+(gy(30)+10)+'" font-size="58" font-family="serif" fill="#161821">𝄞</text>';
+  g+='<text x="20" y="'+(gy(25)+4)+'" font-size="38" font-family="serif" fill="#161821">𝄢</text>';
+  let x=startX;
+  seq.forEach((n,i)=>{
+    if(n.first&&i!==0) g+='<line x1="'+(x-16)+'" y1="'+gy(38)+'" x2="'+(x-16)+'" y2="'+gy(18)+'" stroke="#2a2e3d" stroke-width="1.1" opacity="0.45"/>';
+    if(n.first) g+='<text x="'+(x-8)+'" y="'+(gy(38)-9)+'" font-size="15" font-weight="700" fill="#ef4444">'+n.bar+'</text>';
+    let ys=[],steps=[]; n.midis.forEach(m=>{const h=gHead(x,m,n.durName);g+=h.svg;ys.push(h.y);steps.push(h.step);});
+    if(n.durName!=='whole'){
+      const top=Math.min.apply(null,ys),bot=Math.max.apply(null,ys),avg=steps.reduce((a,b)=>a+b,0)/steps.length,up=avg<34;
+      if(up) g+='<line x1="'+(x+6.5)+'" y1="'+bot+'" x2="'+(x+6.5)+'" y2="'+(top-32)+'" stroke="#161821" stroke-width="1.7"/>';
+      else g+='<line x1="'+(x-6.5)+'" y1="'+top+'" x2="'+(x-6.5)+'" y2="'+(bot+32)+'" stroke="#161821" stroke-width="1.7"/>';
+      if(n.durName==='eighth'){const sx=up?x+6.5:x-6.5,ey=up?top-32:bot+32,d=up?1:-1;
+        g+='<path d="M'+sx+' '+ey+' q9 '+(6*d)+' 8 '+(16*d)+'" stroke="#161821" stroke-width="2" fill="none"/>';}
+    }
+    if(n.finger&&hintsOn) g+='<text x="'+(x-4)+'" y="'+(Math.min.apply(null,ys)-16)+'" font-size="13" font-weight="800" fill="#6d4aff">'+n.finger+'</text>';
+    if(hintsOn) g+='<text x="'+x+'" y="'+LABEL_Y+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6d4aff">'+(n.label||'')+'</text>';
+    n._px=x; x+=WIDTHS[n.durName];
+  });
+  g+='<line x1="'+(x-22)+'" y1="'+gy(38)+'" x2="'+(x-22)+'" y2="'+gy(18)+'" stroke="#2a2e3d" stroke-width="1.2"/>';
+  g+='</svg>'; wrap.innerHTML=g;
+}
+function renderSingle(wrap,startX,total){
+  const HALF=6, MID=100, bottom=(staffMode()==='bass')?18:30, top=bottom+8, mid=bottom+4;
+  const sy=s=>MID-(s-mid)*HALF, LBL=182;
+  const ledg=(x,st)=>'<line x1="'+(x-12)+'" y1="'+sy(st)+'" x2="'+(x+12)+'" y2="'+sy(st)+'" stroke="#2a2e3d" stroke-width="1.3"/>';
+  let g='<svg id="staff" height="202" width="'+total+'">';
+  for(let st=bottom; st<=top; st+=2) g+='<line x1="52" y1="'+sy(st)+'" x2="'+(total-10)+'" y2="'+sy(st)+'" stroke="#2a2e3d" stroke-width="1.3"/>';
+  if(staffMode()==='bass') g+='<text x="20" y="'+(sy(bottom+6)+8)+'" font-size="44" font-family="serif" fill="#161821">𝄢</text>';
+  else g+='<text x="16" y="'+(sy(bottom)+14)+'" font-size="76" font-family="serif" fill="#161821">𝄞</text>';
+  let x=startX;
+  seq.forEach((n,i)=>{
+    if(n.first&&i!==0) g+='<line x1="'+(x-16)+'" y1="'+sy(top)+'" x2="'+(x-16)+'" y2="'+sy(bottom)+'" stroke="#2a2e3d" stroke-width="1.1" opacity="0.45"/>';
+    if(n.first) g+='<text x="'+(x-8)+'" y="'+(sy(top)-9)+'" font-size="15" font-weight="700" fill="#ef4444">'+n.bar+'</text>';
+    let ys=[],steps=[];
+    n.midis.forEach(m=>{
+      const step=diatonicStep(m),y=sy(step),p=partsFromMidi(m),open=(n.durName==='whole'||n.durName==='half');
+      for(let st=bottom-2; st>=step; st-=2) g+=ledg(x,st);
+      for(let st=top+2; st<=step; st+=2) g+=ledg(x,st);
+      if(p.sharp) g+='<text x="'+(x-21)+'" y="'+(y+6)+'" font-size="19" fill="#2a2e3d">♯</text>';
+      g+='<g transform="rotate(-18 '+x+' '+y+')"><ellipse cx="'+x+'" cy="'+y+'" rx="7" ry="5" fill="'+(open?'none':'#161821')+'" stroke="#161821" stroke-width="'+(open?2:1)+'"/></g>';
+      ys.push(y);steps.push(step);
+    });
+    if(n.durName!=='whole'){
+      const tp=Math.min.apply(null,ys),bt=Math.max.apply(null,ys),avg=steps.reduce((a,b)=>a+b,0)/steps.length,up=avg<mid;
+      if(up) g+='<line x1="'+(x+6.5)+'" y1="'+bt+'" x2="'+(x+6.5)+'" y2="'+(tp-32)+'" stroke="#161821" stroke-width="1.7"/>';
+      else g+='<line x1="'+(x-6.5)+'" y1="'+tp+'" x2="'+(x-6.5)+'" y2="'+(bt+32)+'" stroke="#161821" stroke-width="1.7"/>';
+      if(n.durName==='eighth'){const sx=up?x+6.5:x-6.5,ey=up?tp-32:bt+32,d=up?1:-1;
+        g+='<path d="M'+sx+' '+ey+' q9 '+(6*d)+' 8 '+(16*d)+'" stroke="#161821" stroke-width="2" fill="none"/>';}
+    }
+    if(n.finger&&hintsOn) g+='<text x="'+(x-4)+'" y="'+(Math.min.apply(null,ys)-16)+'" font-size="13" font-weight="800" fill="#6d4aff">'+n.finger+'</text>';
+    if(hintsOn) g+='<text x="'+x+'" y="'+LBL+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6d4aff">'+(n.label||'')+'</text>';
+    n._px=x; x+=WIDTHS[n.durName];
+  });
+  g+='<line x1="'+(x-22)+'" y1="'+sy(top)+'" x2="'+(x-22)+'" y2="'+sy(bottom)+'" stroke="#2a2e3d" stroke-width="1.2"/>';
+  g+='</svg>'; wrap.innerHTML=g;
+}
+
+// ---- строка нот ----
+function miniStaff(it){
+  const g=7,top=22,W=80,H=92,half=g/2,Bm=(curClef==='bass')?18:30;
+  const lY=i=>top+i*g, yOf=s=>lY(4)-(s-Bm)*half;
+  let s='<svg class="mini" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
+  for(let i=0;i<5;i++) s+='<line x1="6" y1="'+lY(i)+'" x2="'+(W-6)+'" y2="'+lY(i)+'" stroke="#9aa0b2" stroke-width="1"/>';
+  const cx=W*0.5;
+  it.midis.forEach(m=>{
+    const step=diatonicStep(m),y=yOf(step),p=partsFromMidi(m),B=Bm,T=Bm+8;
+    for(let st=B-2;st>=step;st-=2) s+='<line x1="'+(cx-7)+'" y1="'+yOf(st)+'" x2="'+(cx+7)+'" y2="'+yOf(st)+'" stroke="#9aa0b2" stroke-width="1"/>';
+    for(let st=T+2;st<=step;st+=2) s+='<line x1="'+(cx-7)+'" y1="'+yOf(st)+'" x2="'+(cx+7)+'" y2="'+yOf(st)+'" stroke="#9aa0b2" stroke-width="1"/>';
+    if(p.sharp) s+='<text x="'+(cx-14)+'" y="'+(y+4)+'" font-size="13" fill="#161821">♯</text>';
+    s+='<ellipse cx="'+cx+'" cy="'+y+'" rx="4.6" ry="3.4" fill="#161821" stroke="#161821" transform="rotate(-18 '+cx+' '+y+')"/>';
+  });
+  return s+'</svg>';
+}
+function renderTicker(){
+  const row=$('tickerRow');row.innerHTML='';
+  const cm=$('chipMode')?$('chipMode').value:'name';
+  seq.forEach((n,i)=>{
+    const c=document.createElement('div');c.className='tchip';c.dataset.i=i;
+    let body;
+    if(cm==='staff'){
+      body='<div class="dur">'+(DUR_GLYPH[n.durName]||'')+'</div>'+miniStaff(n)+
+           (hintsOn&&n.finger?'<div class="fin">'+n.finger+'</div>':'');
+    }else{
+      const nm=hintsOn?n.label:'?';
+      body='<div class="dur">'+(DUR_GLYPH[n.durName]||'')+'</div>'+
+           '<div class="name">'+nm+'</div>'+
+           (hintsOn&&n.oct!==''?'<div class="oct">'+octRu(n.oct)+' окт.</div>':'')+
+           (hintsOn&&n.sub?'<div class="sub">'+n.sub+'</div>':'')+
+           (hintsOn&&n.finger?'<div class="fin">'+n.finger+'</div>':'');
+    }
+    c.innerHTML=body;
+    c.addEventListener('click',()=>{stopPlay();setIndex(i);});
+    row.appendChild(c);
+  });
+}
+function moveTicker(){
+  const view=$('tickerView'),row=$('tickerRow'),W=104;
+  row.style.transform='translateX('+(view.clientWidth/2-(idx*W+W/2))+'px)';
+  [...row.children].forEach((c,i)=>{
+    c.classList.toggle('cur',i===idx);
+    if(fadeOn){c.classList.remove('done');
+      c.style.opacity = i<idx?0 : i===idx?1 : i===idx+1?0.85 : 0.12;
+      c.style.filter = (i>idx+1)?'blur(3px)':'none';
+    }else{c.style.opacity='';c.style.filter='';c.classList.toggle('done',i<idx);}
+  });
+  $('tickerPos').textContent=seq.length?(idx+1)+' / '+seq.length:'—';
+}
+
+// ---- клавиатура (88 клавиш) ----
+const WHITE=[],BLACKS=[],WIDX={};
+for(let m=LO;m<=HI;m++){ if(IS_SHARP[m%12]) BLACKS.push(m); else { WIDX[m]=WHITE.length; WHITE.push(m); } }
+const WKEYW=42,BKEYW=26;
+function renderKeyboard(){
+  const kb=$('keyboard');kb.innerHTML='';kb.style.width=(WHITE.length*WKEYW)+'px';
+  kb.classList.toggle('no-labels',!labelsOn);
+  WHITE.forEach((m,i)=>{
+    const p=partsFromMidi(m),el=document.createElement('div');
+    el.className='wkey'+((hintsOn&&rangeSet.has(m))?' in-range':'');el.dataset.midi=m;
+    el.style.left=(i*WKEYW)+'px';el.style.width=WKEYW+'px';
+    el.innerHTML=(p.letter==='C'?'<div class="octn">'+p.octave+'</div>':'')+'<div class="lbl">'+RU[p.letter]+'</div>';
+    el.addEventListener('pointerdown',e=>{e.preventDefault();pressNote(m);});kb.appendChild(el);
+  });
+  BLACKS.forEach(m=>{
+    const wi=WIDX[m-1],el=document.createElement('div');
+    el.className='bkey'+((hintsOn&&rangeSet.has(m))?' in-range':'');el.dataset.midi=m;
+    el.style.left=((wi+1)*WKEYW-BKEYW/2)+'px';el.style.width=BKEYW+'px';
+    el.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();pressNote(m);});kb.appendChild(el);
+  });
+}
+function keyEl(m){return document.querySelector('[data-midi="'+m+'"]');}
+function clearActive(){document.querySelectorAll('.wkey.active,.bkey.active').forEach(e=>e.classList.remove('active'));}
+function keyX(m){return IS_SHARP[m%12]?((WIDX[m-1]+1)*WKEYW):(WIDX[m]*WKEYW);}
+function scrollToRange(){
+  const xs=[...rangeSet].filter(m=>m>=LO&&m<=HI).map(keyX); if(!xs.length)return;
+  const c=(Math.min.apply(null,xs)+Math.max.apply(null,xs))/2,ks=$('kbScroll');
+  ks.scrollLeft=Math.max(0,c-ks.clientWidth/2);
+}
+
+// ---- навигация / автоплей / проверка ----
+function setIndex(i,sound){
+  if(sound===undefined)sound=true;
+  if(!seq.length)return;
+  i=Math.max(0,Math.min(i,seq.length-1));idx=i;pressed.clear();
+  const n=seq[i];
+  const sw=$('staffWrap');
+  sw.scrollTo({left:Math.max(0,n._x - Math.floor(sw.clientWidth/2)), behavior:'smooth'});
+  clearActive();
+  if(hintsOn&&labelsOn){
+    let fk=null; n.midis.forEach(m=>{const el=keyEl(m);if(el){el.classList.add('active');if(!fk)fk=el;}});
+    if(fk){const ks=$('kbScroll'),l=fk.offsetLeft; if(l<ks.scrollLeft+40||l>ks.scrollLeft+ks.clientWidth-80) ks.scrollLeft=l-ks.clientWidth/2;}
+  }
+  moveTicker(); updateNav(); if(sound)soundItem(n);
+}
+function updateNav(){
+  const end=!seq.length||idx>=seq.length-1, nn=$('navNext'); if(!nn)return;
+  nn.innerHTML = end
+    ? 'Повторить <svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V4h12V1zM7 23l-4-4 4-4v3h10v-4h2v6H7v3z"/></svg>'
+    : 'Далее <svg viewBox="0 0 24 24"><path d="M10 6l8.5 6L10 18z"/></svg>';
+}
+function pressNote(m){
+  tone(m,.35);
+  if(!seq.length||playing)return;            // во время автоплея нажатия не двигают курсор
+  const need=new Set(seq[idx].midis);
+  if(need.has(m)){                            // верная нота — засчитываем и идём дальше
+    pressed.add(m);
+    if([...need].every(x=>pressed.has(x))) advanceCorrect();
+  }else if(detectionOn){                       // строгая проверка: неверная нота — ошибка
+    wrongFeedback();
+  }
+}
+function advanceCorrect(){
+  if(idx<seq.length-1) setIndex(idx+1,false);
+  else{if(looping)setIndex(0,false);else{clearActive();status('Пройдено! Отлично 🎉',true);}}
+}
+function wrongFeedback(){buzz();const kb=$('keyboard');kb.classList.add('shake');setTimeout(()=>kb.classList.remove('shake'),340);}
+function autoStep(){
+  if(!playing)return;
+  if(idx>=seq.length){if(looping)idx=0;else{idx=seq.length-1;stopPlay();updateNav();status('Пройдено! 🎉');return;}}
+  if(metro)clickSnd();
+  setIndex(idx,true);
+  const cur=seq[idx>=seq.length?seq.length-1:idx];
+  timer=setTimeout(()=>{idx++;autoStep();},beatSec()*cur.dur*1000);
+}
+function startPlay(){
+  if(!seq.length)generate(); audio();
+  if(detectionOn){setIndex(idx,false);return;}
+  playing=true;setPlayIcon(true);if(idx>=seq.length-1)idx=0;autoStep();
+}
+function stopPlay(){playing=false;setPlayIcon(false);if(timer)clearTimeout(timer);}
+function restart(){
+  if(!seq.length){generate();return;}
+  stopPlay(); idx=0; pressed.clear();
+  renderStaff(); renderTicker(); renderKeyboard();
+  setIndex(0,false); $('staffWrap').scrollLeft=0;
+  status('С начала — поехали!');
+}
+function setPlayIcon(p){$('playIcon').setAttribute('d',p?'M6 5h4v14H6zM14 5h4v14h-4z':'M8 5v14l11-7z');$('btnPlay').classList.toggle('on',p);}
+
+// ---- синхронизация UI ----
+function syncUI(){
+  document.querySelectorAll('#octChips .chip[data-oct]').forEach(c=>c.classList.toggle('sel',sel.octaves.has(+c.dataset.oct)));
+  document.querySelectorAll('#noteChips .chip').forEach(c=>{
+    if(c.dataset.note==='black')c.classList.toggle('sel',sel.black);
+    else c.classList.toggle('sel',sel.notes.has(c.dataset.note));});
+  $('swHints').classList.toggle('on',hintsOn);$('swLabels').classList.toggle('on',labelsOn);
+  $('swFade').classList.toggle('on',fadeOn);$('swDetect').classList.toggle('on',detectionOn);
+  $('keyboard').classList.toggle('no-labels',!labelsOn);
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.mode===mode));
+  document.querySelectorAll('.mode-panel').forEach(p=>p.classList.toggle('on',p.dataset.panel===mode));
+  $('selectorCard').style.opacity=(mode==='random')?1:0.6;
+}
+function refresh(){renderStaff();renderTicker();renderKeyboard();setIndex(idx,false);}
+function updateViews(){
+  $('staffCard').style.display = views.staff?'':'none';
+  $('kbCard').style.display = views.keyboard?'':'none';
+  $('selChips').style.display = views.selector?'':'none';
+  $('explainBlock').style.display = views.explain?'':'none';
+  $('selectorCard').style.display = (views.selector||views.explain)?'':'none';
+  // строку «читай-играй» показываем, только если она включена И включены подсказки (иначе квадратики пустые)
+  $('tickerCard').style.display = (views.ticker && hintsOn)?'':'none';
+  document.querySelectorAll('.vt').forEach(c=>c.classList.toggle('sel',views[c.dataset.view]));
+}
+
+// ---- сценарии (пресеты) ----
+function setBpm(v){$('bpm').value=v;$('bpmLbl').textContent=v+' BPM';}
+function applyPreset(p){
+  stopPlay();
+  if(p==='beginner'){mode='random';sel.octaves=new Set([4]);sel.notes=new Set(DIA);sel.black=false;
+    hintsOn=true;labelsOn=true;detectionOn=false;fadeOn=false;setBpm(70);}
+  else if(p==='blind'){hintsOn=false;labelsOn=false;detectionOn=true;fadeOn=false;}
+  else if(p==='run'){hintsOn=true;labelsOn=true;detectionOn=false;fadeOn=false;setBpm(80);}
+  else if(p==='memory'){hintsOn=true;labelsOn=true;detectionOn=false;fadeOn=true;setBpm(75);}
+  else if(p==='full'){mode='random';sel.octaves=new Set([2,3,4,5,6]);sel.notes=new Set(DIA);
+    hintsOn=true;labelsOn=true;detectionOn=false;fadeOn=false;}
+  syncUI(); generate();
+  status(p==='blind'?'Вслепую: читайте стан и нажимайте клавишу':p==='run'?'Жмите Play — ноты поедут под линию':p==='memory'?'Сыгранные ноты гаснут — играйте по памяти':'');
+}
+
+// ---- инициализация селектов ----
+(function(){const s=$('scalePattern');PATTERNS.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.name;s.appendChild(o);});})();
+(function(){const s=$('scaleTonic');
+  [['C4','До'],['G3','Соль'],['D4','Ре'],['A3','Ля'],['E4','Ми'],['B3','Си'],['F4','Фа'],['C3','До (малая)']].forEach(([n,ru])=>{
+    const o=document.createElement('option');o.value=midiFromName(n);o.textContent=ru;s.appendChild(o);});})();
+(function(){const s=$('exerciseSel');
+  EXERCISES.forEach((e,i)=>{const o=document.createElement('option');o.value=i;o.textContent=e.name;s.appendChild(o);});
+  $('exDesc').textContent=EXERCISES[0].desc;})();
+$('exerciseSel').onchange=function(){$('exDesc').textContent=EXERCISES[+this.value].desc;generate();};
+
+// ---- обработчики ----
+$('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;mode=t.dataset.mode;syncUI();stopPlay();if(mode!=='custom')generate();});
+$('presets').addEventListener('click',e=>{const b=e.target.closest('.pbtn');if(!b)return;applyPreset(b.dataset.p);});
+
+$('swDur').onclick=function(){this.classList.toggle('on');};
+$('swMelody').onclick=function(){this.classList.toggle('on');generate();};
+$('swPitch').onclick=function(){this.classList.toggle('on');};
+$('swHints').onclick=function(){hintsOn=!hintsOn;this.classList.toggle('on',hintsOn);updateViews();refresh();};
+$('swLabels').onclick=function(){labelsOn=!labelsOn;this.classList.toggle('on',labelsOn);$('keyboard').classList.toggle('no-labels',!labelsOn);setIndex(idx,false);};
+$('swFade').onclick=function(){fadeOn=!fadeOn;this.classList.toggle('on',fadeOn);moveTicker();};
+$('swSound').onclick=function(){const on=!this.classList.contains('on');this.classList.toggle('on',on);muted=!on;
+  status(on?'':'Звук компьютера выключен — играйте на своём пианино');};
+$('swDetect').onclick=function(){detectionOn=!detectionOn;this.classList.toggle('on',detectionOn);if(detectionOn)stopPlay();
+  status(detectionOn?'Проверка: нажимайте подсвеченную/нужную клавишу':'');};
+
+$('bpm').oninput=function(){$('bpmLbl').textContent=this.value+' BPM';};
+function nudgeBpm(d){let v=Math.min(160,Math.max(30,(+$('bpm').value)+d));$('bpm').value=v;$('bpmLbl').textContent=v+' BPM';}
+$('bpmMinus').onclick=()=>nudgeBpm(-5);
+$('bpmPlus').onclick=()=>nudgeBpm(5);
+$('btnFullRange').onclick=()=>{sel.octaves=new Set([2,3,4,5,6]);syncUI();if(mode==='random'||mode==='chord')generate();status('Включены все октавы (весь диапазон)');};
+$('clefSel').onchange=()=>{
+  const c=$('clefSel').value;
+  if(c==='bass') sel.octaves=new Set([2,3]);            // Большая + Малая — ложатся на басовый стан
+  else if(c==='treble') sel.octaves=new Set([4,5]);     // Первая + Вторая — на скрипичный
+  else sel.octaves=new Set([2,3,4,5]);                  // грандстан — обе строки
+  syncUI(); generate();
+}; $('scaleTonic').onchange=generate; $('scaleType').onchange=generate;
+$('scaleDir').onchange=generate; $('chordCount').onchange=generate; $('scalePattern').onchange=generate;
+$('noteCount').onchange=()=>{if(mode==='random')generate();};
+$('chordQual').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;c.classList.toggle('sel');generate();});
+
+$('btnGen').onclick=generate;
+$('viewToggles').addEventListener('click',e=>{const c=e.target.closest('.vt');if(!c)return;const k=c.dataset.view;views[k]=!views[k];updateViews();});
+$('btnFocus').onclick=function(){
+  const focus=!(this.dataset.on==='1'); this.dataset.on=focus?'1':'';
+  if(focus){ views.staff=true;views.keyboard=true;views.ticker=false;views.selector=false;views.explain=false;
+    this.textContent='↩ Показать всё'; }
+  else { views.staff=true;views.keyboard=true;views.ticker=true;views.selector=true;views.explain=true;
+    this.textContent='🎯 Только тренировка'; }
+  updateViews();
+};
+$('btnUserMel').onclick=loadUserMelody;
+$('btnUserClear').onclick=()=>{$('userMel').value='';$('userMel').focus();status('Поле очищено — вставьте следующую мелодию');};
+$('userMel').addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter')loadUserMelody();});
+$('btnSwap').onclick=()=>{const a=$('staffCard'),b=$('tickerCard'),p=a.parentNode;
+  if(a.nextElementSibling===b) p.insertBefore(b,a); else p.insertBefore(a,b);};
+$('chipMode').onchange=()=>{renderTicker();setIndex(idx,false);};
+$('btnPlay').onclick=()=>{playing?stopPlay():startPlay();};
+$('btnStop').onclick=()=>{stopPlay();idx=0;setIndex(0,false);$('staffWrap').scrollLeft=0;status('Стоп');};
+$('btnRestart').onclick=()=>restart();
+$('btnPrev').onclick=()=>{stopPlay();setIndex(idx-1);};
+$('btnNext').onclick=()=>{stopPlay(); if(idx>=seq.length-1) restart(); else setIndex(idx+1);};
+$('navPrev').onclick=()=>{stopPlay();setIndex(idx-1);};
+$('navNext').onclick=()=>{stopPlay(); if(idx>=seq.length-1) restart(); else setIndex(idx+1);};
+$('btnLoop').onclick=function(){looping=!looping;this.classList.toggle('on',looping);};
+$('btnMetro').onclick=function(){metro=!metro;this.classList.toggle('on',metro);};
+
+$('octChips').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;
+  if(c.dataset.all){sel.octaves=new Set([2,3,4,5,6]);}
+  else{const o=+c.dataset.oct;if(sel.octaves.has(o))sel.octaves.delete(o);else sel.octaves.add(o);if(!sel.octaves.size)sel.octaves.add(o);}
+  syncUI(); if(mode==='random'||mode==='chord')generate();});
+$('noteChips').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;
+  if(c.dataset.note==='black')sel.black=!sel.black;
+  else{const n=c.dataset.note;if(sel.notes.has(n))sel.notes.delete(n);else sel.notes.add(n);if(!sel.notes.size)sel.notes.add(n);}
+  syncUI(); if(mode==='random')generate();});
+
+const CODE={KeyA:'C4',KeyW:'C#4',KeyS:'D4',KeyE:'D#4',KeyD:'E4',KeyF:'F4',KeyT:'F#4',KeyG:'G4',KeyY:'G#4',KeyH:'A4',KeyU:'A#4',KeyJ:'B4',KeyK:'C5',KeyO:'C#5',KeyL:'D5',KeyP:'D#5',Semicolon:'E5',Quote:'F5'};
+window.addEventListener('keydown',e=>{if(e.repeat)return; const tg=(e.target.tagName||'');if(tg==='INPUT'||tg==='SELECT'||tg==='TEXTAREA')return;
+  if(e.code==='Space'){e.preventDefault();playing?stopPlay():startPlay();return;}
+  if(e.code==='ArrowRight'){e.preventDefault();stopPlay(); if(idx>=seq.length-1) restart(); else setIndex(idx+1);return;}
+  if(e.code==='ArrowLeft'){e.preventDefault();stopPlay();setIndex(idx-1);return;}
+  const n=CODE[e.code];if(n){e.preventDefault();pressNote(midiFromName(n));}});
+
+renderKeyboard(); generate(); updateViews();
+</script>
+</body>
+</html>
