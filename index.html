@@ -478,8 +478,10 @@ const MELSET={
 let melName='';
 function genMelody(){
   const octs=[...sel.octaves].sort((a,b)=>a-b);
-  const cnt=Math.min(3,Math.max(1,octs.length||1));
   let lowest=octs.length?octs[0]:4;
+  // размах выбранных октав (min..max), а не их число — чтобы уважать «Первая+Третья»
+  const span=octs.length?(octs[octs.length-1]-octs[0]+1):1;
+  const cnt=Math.min(3,Math.max(1,span));
   const list=MELSET[cnt], mel=list[Math.floor(Math.random()*list.length)];
   let base=(lowest+1)*12;
   if(base<24) base=24;
@@ -773,7 +775,10 @@ function renderSingle(wrap,startX,total){
 
 // ---- строка нот ----
 function miniStaff(it){
-  const g=7,top=22,W=80,H=92,half=g/2,Bm=(curClef==='bass')?18:30;
+  // клеф мини-стана — по нотам самого элемента (среднее), чтобы басовые ноты
+  // не уезжали вниз кучей добавочных линий в двуручных упражнениях
+  const avgM=it.midis.reduce((a,b)=>a+b,0)/it.midis.length;
+  const g=7,top=22,W=80,H=92,half=g/2,Bm=(avgM<60)?18:30;
   const lY=i=>top+i*g, yOf=s=>lY(4)-(s-Bm)*half;
   let s='<svg class="mini" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'">';
   for(let i=0;i<5;i++) s+='<line x1="6" y1="'+lY(i)+'" x2="'+(W-6)+'" y2="'+lY(i)+'" stroke="#9aa0b2" stroke-width="1"/>';
