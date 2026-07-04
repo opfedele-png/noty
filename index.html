@@ -90,7 +90,7 @@
   .ticker-row{position:absolute;top:0;bottom:0;display:flex;align-items:center;transition:transform .28s cubic-bezier(.22,.61,.36,1);will-change:transform}
   .tchip{width:96px;flex:none;height:128px;margin:0 4px;border-radius:14px;background:#fff;border:1px solid #e0e3ec;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#2a2e3d;transition:.25s;cursor:pointer;box-shadow:0 2px 8px rgba(30,35,60,.05);overflow:hidden}
   .tchip .dur{font-size:16px;color:#9aa0b2;height:18px}
-  .tchip .name{font-size:26px;font-weight:800;letter-spacing:-.5px}
+  .tchip .name{font-size:calc(26px*var(--z,1));font-weight:800;letter-spacing:-.5px}
   .tchip .oct{font-size:11px;color:#8a90a2;font-weight:600}
   .tchip .sub{font-size:11px;color:#8a90a2;font-weight:600;text-align:center;line-height:1.2;padding:0 4px}
   .tchip .fin{margin-top:2px;font-size:11px;color:#1f2330;background:var(--amber);border-radius:20px;padding:1px 8px;font-weight:800}
@@ -238,7 +238,6 @@
     <div class="controls" style="border-top:1px solid #eef0f5;margin-top:16px;padding-top:14px">
       <div class="ctl"><label>Темп / скорость</label><button class="pbtn" id="bpmMinus" style="padding:8px 14px;font-size:18px;line-height:1">−</button><input type="range" id="bpm" min="10" max="160" value="80"><button class="pbtn" id="bpmPlus" style="padding:8px 14px;font-size:18px;line-height:1">+</button><span id="bpmLbl" style="font-weight:700;color:var(--violet-d);width:62px">80 BPM</span></div>
       <div class="ctl"><label>🔊 Звук компьютера</label><div class="switch on" id="swSound"></div></div>
-      <div class="ctl"><label>🔍 Масштаб</label><button class="pbtn" id="zoomMinus" style="padding:8px 14px;font-size:18px;line-height:1">−</button><button class="pbtn" id="zoomPlus" style="padding:8px 14px;font-size:18px;line-height:1">+</button></div>
       <div class="ctl"><label>🎼 Ключ / стан</label><select id="clefSel"><option value="treble">Скрипичный</option><option value="bass">Басовый</option><option value="grand" selected>Оба (грандстан)</option></select></div>
       <div class="ctl"><label>💡 Подсказки</label><div class="switch on" id="swHints"></div></div>
       <div class="ctl"><label>Подписи клавиш</label><div class="switch on" id="swLabels"></div></div>
@@ -247,16 +246,6 @@
       <div class="ctl"><label>В строке</label><select id="chipMode"><option value="name">Названия нот</option><option value="staff">Ноты на стане</option></select></div>
       <button class="pbtn" id="btnSwap">⇅ Поменять: стан ↔ строка</button>
       <button class="gen" id="btnGen">Генерировать</button>
-    </div>
-
-    <div class="controls" id="viewToggles" style="border-top:1px solid #eef0f5;margin-top:6px;padding-top:14px;align-items:center">
-      <span class="plabel" style="font-weight:700;color:var(--violet-d)">👁 Показывать на экране:</span>
-      <div class="chip vt sel" data-view="staff">Нотный стан</div>
-      <div class="chip vt sel" data-view="ticker">Читай-играй</div>
-      <div class="chip vt sel" data-view="keyboard">Клавиатура</div>
-      <div class="chip vt sel" data-view="selector">Меню выбора</div>
-      <div class="chip vt sel" data-view="explain">Пояснения</div>
-      <button class="pbtn" id="btnFocus" style="margin-left:auto;background:#1d1f2b;border-color:#1d1f2b;color:#fff">🎯 Только тренировка</button>
     </div>
   </div>
 
@@ -271,6 +260,8 @@
         <div class="tbtn" id="btnLoop" title="Повтор"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4V6H7v4H5V4h12V1zM7 23l-4-4 4-4v3h10v-4h2v6H7v3z"/></svg></div>
         <div class="tbtn" id="btnMetro" title="Метроном"><svg viewBox="0 0 24 24"><path d="M12 2l4 18H8L12 2zm0 6l-2 9h4l-2-9z"/></svg></div>
         <button class="pbtn" id="btnRestart" style="margin-left:6px">↻ Заново</button>
+        <button class="pbtn zoomOut" title="Мельче" style="padding:6px 11px;font-size:15px;line-height:1;margin-left:6px">🔍−</button>
+        <button class="pbtn zoomIn" title="Крупнее" style="padding:6px 11px;font-size:15px;line-height:1">🔍+</button>
         <span class="status" id="status"></span>
       </div>
     </div>
@@ -281,7 +272,7 @@
   </div>
 
   <div class="card ticker-card" id="tickerCard">
-    <div class="ticker-head"><div class="t">▶ Строка нот — читай и играй</div><div class="pos" id="tickerPos">—</div></div>
+    <div class="ticker-head"><div class="t">▶ Строка нот — читай и играй</div><button class="pbtn zoomOut" style="padding:5px 10px;font-size:14px;line-height:1;margin-left:auto">🔍−</button><button class="pbtn zoomIn" style="padding:5px 10px;font-size:14px;line-height:1">🔍+</button><div class="pos" id="tickerPos" style="margin-left:10px">—</div></div>
     <div class="ticker-view" id="tickerView"><div class="playhead"></div><div class="ticker-row" id="tickerRow"></div></div>
     <div class="ticker-foot">
       <button class="navbtn prev" id="navPrev"><svg viewBox="0 0 24 24"><path d="M14 6l-8.5 6L14 18z"/></svg> Назад</button>
@@ -325,6 +316,18 @@
     </div>
   </div>
 
+  <div class="card card-pad" id="viewCard">
+    <div class="controls" id="viewToggles" style="align-items:center">
+      <span class="plabel" style="font-weight:700;color:var(--violet-d)">👁 Показывать на экране:</span>
+      <div class="chip vt sel" data-view="staff">Нотный стан</div>
+      <div class="chip vt sel" data-view="ticker">Читай-играй</div>
+      <div class="chip vt sel" data-view="keyboard">Клавиатура</div>
+      <div class="chip vt sel" data-view="selector">Меню выбора</div>
+      <div class="chip vt sel" data-view="explain">Пояснения</div>
+      <button class="pbtn" id="btnFocus" style="margin-left:auto;background:#1d1f2b;border-color:#1d1f2b;color:#fff">🎯 Только тренировка</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -350,7 +353,10 @@ let actx=null;
 function audio(){if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();return actx;}
 let audioPrimed=false;
 function unlockAudio(){const ac=audio(); if(ac.state==='suspended')ac.resume();
-  if(!audioPrimed){audioPrimed=true; try{const o=ac.createOscillator(),g=ac.createGain();g.gain.value=0.00001;o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+0.03);}catch(e){}}}
+  if(!audioPrimed){audioPrimed=true; try{
+    const buf=ac.createBuffer(1,1,22050),src=ac.createBufferSource();src.buffer=buf;src.connect(ac.destination);src.start(0);
+    const o=ac.createOscillator(),g=ac.createGain();g.gain.value=0.00001;o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+0.03);
+  }catch(e){}}}
 function tone(m,dur=.5,type='triangle',vol=.22,delay=0){if(muted)return;const ac=audio(),t=ac.currentTime+delay,o=ac.createOscillator(),g=ac.createGain();
   o.type=type;o.frequency.value=midiToFreq(m);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.02);
   g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+dur+.03);}
@@ -732,10 +738,11 @@ function miniStaff(it){
   return s+'</svg>';
 }
 function renderTicker(){
-  const row=$('tickerRow');row.innerHTML='';
+  const row=$('tickerRow');row.innerHTML='';row.style.setProperty('--z',zoom);
   const cm=$('chipMode')?$('chipMode').value:'name';
   seq.forEach((n,i)=>{
     const c=document.createElement('div');c.className='tchip';c.dataset.i=i;
+    c.style.width=Math.round(96*zoom)+'px';c.style.height=Math.round(128*zoom)+'px';
     let body;
     if(cm==='staff'){
       body='<div class="dur">'+(DUR_GLYPH[n.durName]||'')+'</div>'+miniStaff(n)+
@@ -754,7 +761,7 @@ function renderTicker(){
   });
 }
 function moveTicker(){
-  const view=$('tickerView'),row=$('tickerRow'),W=104;
+  const view=$('tickerView'),row=$('tickerRow'),W=Math.round(96*zoom)+8;
   row.style.transform='translateX('+(view.clientWidth/2-(idx*W+W/2))+'px)';
   [...row.children].forEach((c,i)=>{
     c.classList.toggle('cur',i===idx);
@@ -819,7 +826,7 @@ function updateNav(){
     : 'Далее <svg viewBox="0 0 24 24"><path d="M10 6l8.5 6L10 18z"/></svg>';
 }
 function pressNote(m){
-  tone(m,.35);
+  unlockAudio(); tone(m,.35);
   if(!seq.length||playing)return;            // во время автоплея нажатия не двигают курсор
   const need=new Set(seq[idx].midis);
   if(need.has(m)){                            // верная нота — засчитываем и идём дальше
@@ -927,9 +934,10 @@ $('bpm').oninput=function(){$('bpmLbl').textContent=this.value+' BPM';};
 function nudgeBpm(d){let v=Math.min(160,Math.max(10,(+$('bpm').value)+d));$('bpm').value=v;$('bpmLbl').textContent=v+' BPM';}
 $('bpmMinus').onclick=()=>nudgeBpm(-5);
 $('bpmPlus').onclick=()=>nudgeBpm(5);
-function applyZoom(){ renderStaff(); renderKeyboard(); setIndex(idx,false); scrollToRange(); status('Масштаб: '+Math.round(zoom*100)+'%'); }
-$('zoomMinus').onclick=()=>{ zoom=Math.max(0.5,+(zoom-0.1).toFixed(2)); applyZoom(); };
-$('zoomPlus').onclick=()=>{ zoom=Math.min(1.4,+(zoom+0.1).toFixed(2)); applyZoom(); };
+function applyZoom(){ renderStaff(); renderTicker(); renderKeyboard(); setIndex(idx,false); scrollToRange(); status('Масштаб: '+Math.round(zoom*100)+'%'); }
+function zoomBy(d){ zoom=Math.min(1.4,Math.max(0.2,+(zoom+d).toFixed(2))); applyZoom(); }
+document.querySelectorAll('.zoomOut').forEach(b=>b.onclick=()=>zoomBy(-0.1));
+document.querySelectorAll('.zoomIn').forEach(b=>b.onclick=()=>zoomBy(0.1));
 $('btnFullRange').onclick=()=>{sel.octaves=new Set([2,3,4,5,6]);syncUI();if(mode==='random'||mode==='chord')generate();status('Включены все октавы (весь диапазон)');};
 $('clefSel').onchange=()=>{
   const c=$('clefSel').value;
