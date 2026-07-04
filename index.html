@@ -113,9 +113,9 @@
   .wkey:hover{background:linear-gradient(#fff,#e3e6ee)}
   .wkey.in-range{background:linear-gradient(#eef5ff,#cfe2ff)}
   .wkey.active{background:linear-gradient(#fff3b0,#ffcf3f)!important;box-shadow:0 0 16px rgba(255,180,0,.6)}
-  .kbfin{position:absolute;top:6px;left:50%;transform:translateX(-50%);min-width:16px;height:16px;line-height:16px;text-align:center;padding:0 2px;background:#6d4aff;color:#fff;border-radius:9px;font-size:11px;font-weight:800;z-index:6;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+  .kbfin{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);min-width:16px;height:16px;line-height:16px;text-align:center;padding:0 2px;background:#6d4aff;color:#fff;border-radius:9px;font-size:11px;font-weight:800;z-index:6;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.35)}
   .wkey .lbl{font-size:12px;font-weight:600;color:#3a3f52;padding-bottom:9px;pointer-events:none}
-  .wkey .octn{position:absolute;bottom:26px;font-size:9px;color:#aab0c0;font-weight:700;pointer-events:none}
+  .wkey .octn{position:absolute;top:6px;left:50%;transform:translateX(-50%);font-size:10px;color:#aab0c0;font-weight:700;pointer-events:none}
   .wkey.in-range .lbl{color:#16407a}
   .keyboard.no-labels .lbl,.keyboard.no-labels .octn{display:none}
   .bkey{position:absolute;top:0;height:60%;background:linear-gradient(#3a3f52,#11131d);border-radius:0 0 5px 5px;z-index:5;cursor:pointer;box-shadow:0 4px 5px rgba(0,0,0,.45)}
@@ -788,22 +788,26 @@ function renderKeyboard(){
   WKEYW=Math.max(22,Math.round(WKEYW0*zoom)); BKEYW=Math.round(WKEYW*BKEYW0/WKEYW0);
   const kb=$('keyboard');kb.innerHTML='';kb.style.width=(WHITE.length*WKEYW)+'px';
   kb.classList.toggle('no-labels',!labelsOn);
+  const fmap={};
+  if(hintsOn) seq.forEach(it=>{ if(it.fingers) it.midis.forEach((m,k)=>{ const f=it.fingers[k]; if(f!=null&&f!==''&&fmap[m]===undefined) fmap[m]=f; }); });
+  const finBadge=m=> fmap[m]!==undefined ? '<div class="kbfin">'+fmap[m]+'</div>' : '';
   WHITE.forEach((m,i)=>{
     const p=partsFromMidi(m),el=document.createElement('div');
     el.className='wkey'+((hintsOn&&rangeSet.has(m))?' in-range':'');el.dataset.midi=m;
     el.style.left=(i*WKEYW)+'px';el.style.width=WKEYW+'px';
-    el.innerHTML=(p.letter==='C'?'<div class="octn">'+p.octave+'</div>':'')+'<div class="lbl">'+RU[p.letter]+'</div>';
+    el.innerHTML=finBadge(m)+(p.letter==='C'?'<div class="octn">'+p.octave+'</div>':'')+'<div class="lbl">'+RU[p.letter]+'</div>';
     el.addEventListener('pointerdown',e=>{e.preventDefault();pressNote(m);});kb.appendChild(el);
   });
   BLACKS.forEach(m=>{
     const wi=WIDX[m-1],el=document.createElement('div');
     el.className='bkey'+((hintsOn&&rangeSet.has(m))?' in-range':'');el.dataset.midi=m;
     el.style.left=((wi+1)*WKEYW-BKEYW/2)+'px';el.style.width=BKEYW+'px';
+    el.innerHTML=finBadge(m);
     el.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();pressNote(m);});kb.appendChild(el);
   });
 }
 function keyEl(m){return document.querySelector('[data-midi="'+m+'"]');}
-function clearActive(){document.querySelectorAll('.wkey.active,.bkey.active').forEach(e=>{e.classList.remove('active');const f=e.querySelector('.kbfin');if(f)f.remove();});}
+function clearActive(){document.querySelectorAll('.wkey.active,.bkey.active').forEach(e=>e.classList.remove('active'));}
 function keyX(m){return IS_SHARP[m%12]?((WIDX[m-1]+1)*WKEYW):(WIDX[m]*WKEYW);}
 function scrollToRange(){
   const xs=[...rangeSet].filter(m=>m>=LO&&m<=HI).map(keyX); if(!xs.length)return;
@@ -821,8 +825,7 @@ function setIndex(i,sound){
   sw.scrollTo({left:Math.max(0,n._x - Math.floor(sw.clientWidth/2)), behavior:'smooth'});
   clearActive();
   if(hintsOn&&labelsOn){
-    let fk=null; n.midis.forEach((m,k)=>{const el=keyEl(m);if(el){el.classList.add('active');if(!fk)fk=el;
-      if(n.fingers&&n.fingers[k]){const b=document.createElement('div');b.className='kbfin';b.textContent=n.fingers[k];el.appendChild(b);}}});
+    let fk=null; n.midis.forEach(m=>{const el=keyEl(m);if(el){el.classList.add('active');if(!fk)fk=el;}});
     if(fk){const ks=$('kbScroll'),l=fk.offsetLeft; if(l<ks.scrollLeft+40||l>ks.scrollLeft+ks.clientWidth-80) ks.scrollLeft=l-ks.clientWidth/2;}
   }
   moveTicker(); updateNav(); if(sound)soundItem(n);
