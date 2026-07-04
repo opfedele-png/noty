@@ -249,6 +249,7 @@
       <div class="ctl"><label>🔊 Звук компьютера</label><div class="switch on" id="swSound"></div></div>
       <div class="ctl"><label>🎼 Ключ / стан</label><select id="clefSel"><option value="treble">Скрипичный</option><option value="bass">Басовый</option><option value="grand" selected>Оба (грандстан)</option></select></div>
       <div class="ctl"><label>💡 Подсказки</label><div class="switch on" id="swHints"></div></div>
+      <div class="ctl"><label>🖐 Показать пальцы</label><div class="switch on" id="swFingers"></div></div>
       <div class="ctl"><label>Подписи клавиш</label><div class="switch on" id="swLabels"></div></div>
       <div class="ctl"><label>Исчезающие ноты</label><div class="switch" id="swFade"></div></div>
       <div class="ctl"><label>Проверять нажатия</label><div class="switch" id="swDetect"></div></div>
@@ -386,6 +387,9 @@ function soundItem(it){it.midis.forEach((m,i)=>tone(m,beatSec()*it.dur*.95,'tria
 const SCALES={major:[0,2,4,5,7,9,11,12],minor:[0,2,3,5,7,8,10,12],hminor:[0,2,3,5,7,8,11,12],penta:[0,2,4,7,9,12],chrom:[0,1,2,3,4,5,6,7,8,9,10,11,12]};
 const CHORDS={major:[0,4,7],minor:[0,3,7],dim:[0,3,6],dom7:[0,4,7,10]};
 const CHORD_RU={major:'маж',minor:'мин',dim:'ум',dom7:'7'};
+const FIN_STD_RH=['1','2','3','1','2','3','4','5'], FIN_STD_LH=['5','4','3','2','1','3','2','1'];
+const FIN_F_RH=['1','2','3','4','1','2','3','4'], FIN_B_LH=['4','3','2','1','4','3','2','1'];
+function scaleFinAsc(pc,hand){ return hand==='RH' ? (pc===5?FIN_F_RH:FIN_STD_RH) : (pc===11?FIN_B_LH:FIN_STD_LH); }
 const LETTER_PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11,H:0};   // A=Ля, B=Си, H=До СЛЕДУЮЩЕЙ октавы
 const PATTERNS=[
  {id:'gen',name:'Гамма по настройкам (тоника / тип / направление)'},
@@ -544,7 +548,7 @@ let kbZoom=1, kbAuto=true, kbFitScale=1;
 const OCT_NAME={0:'Субконтр.',1:'Контр.',2:'Большая',3:'Малая',4:'Первая',5:'Вторая',6:'Третья',7:'Четвёртая',8:'Пятая'};
 const OCT_MARK={0:'СК',1:'К',2:'Б',3:'М',4:'1',5:'2',6:'3',7:'4',8:'5'};
 const OCT_COLOR={0:'#cfd5e2',1:'#bcccf0',2:'#bfe6cf',3:'#f6dfae',4:'#f7bfce',5:'#d4c4f8',6:'#bfe8f0',7:'#f0d0b8',8:'#dcdce6'};
-let hintsOn=true, labelsOn=true, fadeOn=false, detectionOn=false, muted=false;
+let hintsOn=true, labelsOn=true, fadeOn=false, detectionOn=false, muted=false, showFingers=true;
 const views={staff:true,ticker:true,keyboard:true,selector:true,explain:true};
 let pressed=new Set(), curClef='treble', rangeSet=new Set();
 const sel={octaves:new Set([4]),notes:new Set(DIA),black:false};
@@ -592,19 +596,27 @@ function genScale(){
     const P=PATTERNS.find(p=>p.id===pat); curClef=pickClef('treble');
     return patternToMidis(P.str).map(m=>({midis:[m],dur:1,durName:'quarter'}));
   }
-  const tonic=+$('scaleTonic').value,iv=SCALES[$('scaleType').value],dir=$('scaleDir').value;
+  const tonic=+$('scaleTonic').value,iv=SCALES[$('scaleType').value],dir=$('scaleDir').value,type=$('scaleType').value;
   curClef=pickClef(tonic<55?'bass':'treble');
   const notes=iv.map(s=>tonic+s);
   const line=dir==='up'?notes:dir==='down'?[...notes].reverse():notes.concat([...notes].reverse().slice(1));
-  return line.map(m=>({midis:[m],dur:1,durName:'quarter'}));
+  let fin=null;
+  if(type==='major'||type==='minor'||type==='hminor'){
+    const hand=curClef==='bass'?'LH':'RH', asc=scaleFinAsc(tonic%12,hand);
+    fin = dir==='up'?asc : dir==='down'?[...asc].reverse() : asc.concat([...asc].reverse().slice(1));
+  }
+  return line.map((m,i)=>({midis:[m],dur:1,durName:'quarter',kbf:fin?[fin[i]]:null}));
 }
 function genChords(){
   const quals=[...document.querySelectorAll('#chordQual .chip.sel')].map(c=>c.dataset.q);
   const qs=quals.length?quals:['major','minor'],count=+$('chordCount').value;
   let roots=buildPool().filter(m=>m<76); if(!roots.length)roots=[60,62,64,65,67];
   curClef=pickClef('treble');const out=[];
+  const hand=curClef==='bass'?'LH':'RH';
+  const fin3=hand==='RH'?['1','3','5']:['5','3','1'], fin4=hand==='RH'?['1','2','3','5']:['5','3','2','1'];
   for(let i=0;i<count;i++){const root=roots[Math.floor(Math.random()*roots.length)],q=qs[Math.floor(Math.random()*qs.length)];
-    out.push({midis:CHORDS[q].map(s=>root+s),dur:2,durName:'half',chordQ:q,root});}
+    const midis=CHORDS[q].map(s=>root+s);
+    out.push({midis,dur:2,durName:'half',chordQ:q,root,kbf:midis.length===4?fin4:fin3});}
   return out;
 }
 function loadExercise(){
@@ -833,7 +845,7 @@ function renderKeyboard(){
   WKEYW=Math.max(14,Math.round(WKEYW0*eff)); BKEYW=Math.round(WKEYW*BKEYW0/WKEYW0);
   const totalW=whites.length*WKEYW; kb.style.width=totalW+'px'; bar.style.width=totalW+'px';
   const fmap={};
-  if(hintsOn) seq.forEach(it=>{ if(it.fingers) it.midis.forEach((m,k)=>{ const f=it.fingers[k]; if(f!=null&&f!==''&&fmap[m]===undefined) fmap[m]=f; }); });
+  if(showFingers) seq.forEach(it=>{ const F=it.fingers||it.kbf; if(F) it.midis.forEach((m,k)=>{ const f=F[k]; if(f!=null&&f!==''&&fmap[m]===undefined) fmap[m]=f; }); });
   const finBadge=m=> fmap[m]!==undefined ? '<div class="kbfin">'+fmap[m]+'</div>' : '';
   whites.forEach((m,i)=>{
     const p=partsFromMidi(m),el=document.createElement('div');
@@ -995,6 +1007,7 @@ $('swDur').onclick=function(){this.classList.toggle('on');};
 $('swMelody').onclick=function(){this.classList.toggle('on');generate();};
 $('swPitch').onclick=function(){this.classList.toggle('on');};
 $('swHints').onclick=function(){hintsOn=!hintsOn;this.classList.toggle('on',hintsOn);updateViews();refresh();};
+$('swFingers').onclick=function(){showFingers=!showFingers;this.classList.toggle('on',showFingers);renderKeyboard();setIndex(idx,false);};
 $('swLabels').onclick=function(){labelsOn=!labelsOn;this.classList.toggle('on',labelsOn);$('keyboard').classList.toggle('no-labels',!labelsOn);setIndex(idx,false);};
 $('swFade').onclick=function(){fadeOn=!fadeOn;this.classList.toggle('on',fadeOn);moveTicker();};
 $('swSound').onclick=function(){const on=!this.classList.contains('on');this.classList.toggle('on',on);muted=!on;
