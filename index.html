@@ -290,8 +290,11 @@
   </div>
 
   <div class="card" id="kbCard">
-    <div class="card-pad" style="padding-bottom:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    <div class="card-pad" style="padding-bottom:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <span class="selector"><h3 style="margin:0">Клавиатура</h3></span>
+      <button class="pbtn kbZoomOut" title="Мельче" style="padding:6px 11px;font-size:15px;line-height:1">🔍−</button>
+      <button class="pbtn kbZoomIn" title="Крупнее" style="padding:6px 11px;font-size:15px;line-height:1">🔍+</button>
+      <button class="pbtn kbZoomFit" title="Подогнать по ширине" style="padding:6px 11px;font-size:13px;line-height:1">↔ По ширине</button>
       <button class="pbtn" id="btnKbAll" style="margin-left:auto">🎹 Показать все октавы</button>
     </div>
     <div class="kb-scroll" id="kbScroll"><div class="oct-bar" id="octBar"></div><div class="keyboard" id="keyboard"></div></div>
@@ -537,6 +540,7 @@ const EXERCISES=[
 let mode='random', seq=[], idx=0, looping=false, playing=false, metro=false, timer=null;
 let zoom=1;
 let kbAll=false, kbX={};
+let kbZoom=1, kbAuto=true, kbFitScale=1;
 const OCT_NAME={0:'Субконтр.',1:'Контр.',2:'Большая',3:'Малая',4:'Первая',5:'Вторая',6:'Третья',7:'Четвёртая',8:'Пятая'};
 const OCT_MARK={0:'СК',1:'К',2:'Б',3:'М',4:'1',5:'2',6:'3',7:'4',8:'5'};
 const OCT_COLOR={0:'#cfd5e2',1:'#bcccf0',2:'#bfe6cf',3:'#f6dfae',4:'#f7bfce',5:'#d4c4f8',6:'#bfe8f0',7:'#f0d0b8',8:'#dcdce6'};
@@ -716,8 +720,8 @@ function renderSingle(wrap,startX,total){
   const ledg=(x,st)=>'<line x1="'+(x-12)+'" y1="'+sy(st)+'" x2="'+(x+12)+'" y2="'+sy(st)+'" stroke="#2a2e3d" stroke-width="1.3"/>';
   let g='<svg id="staff" height="202" width="'+total+'">';
   for(let st=bottom; st<=top; st+=2) g+='<line x1="52" y1="'+sy(st)+'" x2="'+(total-10)+'" y2="'+sy(st)+'" stroke="#2a2e3d" stroke-width="1.3"/>';
-  if(staffMode()==='bass') g+='<text x="20" y="'+(sy(bottom+6)+8)+'" font-size="44" font-family="serif" fill="#161821">𝄢</text>';
-  else g+='<text x="16" y="'+(sy(bottom)+14)+'" font-size="76" font-family="serif" fill="#161821">𝄞</text>';
+  if(staffMode()==='bass') g+='<text x="20" y="'+(sy(bottom+6)+6)+'" font-size="40" font-family="serif" fill="#161821">𝄢</text>';
+  else g+='<text x="18" y="'+(sy(bottom)+10)+'" font-size="62" font-family="serif" fill="#161821">𝄞</text>';
   let x=startX;
   seq.forEach((n,i)=>{
     if(n.first&&i!==0) g+='<line x1="'+(x-16)+'" y1="'+sy(top)+'" x2="'+(x-16)+'" y2="'+sy(bottom)+'" stroke="#2a2e3d" stroke-width="1.1" opacity="0.45"/>';
@@ -805,14 +809,21 @@ const WHITE=[],BLACKS=[],WIDX={};
 for(let m=LO;m<=HI;m++){ if(IS_SHARP[m%12]) BLACKS.push(m); else { WIDX[m]=WHITE.length; WHITE.push(m); } }
 const WKEYW0=42,BKEYW0=26; let WKEYW=42,BKEYW=26;
 function renderKeyboard(){
-  WKEYW=Math.max(22,Math.round(WKEYW0*zoom)); BKEYW=Math.round(WKEYW*BKEYW0/WKEYW0);
   const kb=$('keyboard'),bar=$('octBar');kb.innerHTML='';bar.innerHTML='';kbX={};
   kb.classList.toggle('no-labels',!labelsOn);
   const octSet=new Set(sel.octaves);
-  if(!kbAll) rangeSet.forEach(m=>octSet.add(partsFromMidi(m).octave));
+  if(!kbAll){
+    rangeSet.forEach(m=>octSet.add(partsFromMidi(m).octave));
+    if(octSet.size){ const lo=Math.min(...octSet), hi=Math.max(...octSet); for(let o=lo;o<=hi;o++) octSet.add(o); }  // без пропусков между октавами
+  }
   const showAll=kbAll||!octSet.size;
   const vis=m=>showAll||octSet.has(partsFromMidi(m).octave);
   const whites=WHITE.filter(vis), widx={}; whites.forEach((m,i)=>widx[m]=i);
+  // свой масштаб клавиатуры: авто-подгон под ширину окна или ручной
+  const contW=(($('kbScroll')||{}).clientWidth||360)-18;
+  kbFitScale = whites.length ? Math.min(1, contW/(whites.length*WKEYW0)) : 1;
+  const eff = kbAuto ? kbFitScale : kbZoom;
+  WKEYW=Math.max(14,Math.round(WKEYW0*eff)); BKEYW=Math.round(WKEYW*BKEYW0/WKEYW0);
   const totalW=whites.length*WKEYW; kb.style.width=totalW+'px'; bar.style.width=totalW+'px';
   const fmap={};
   if(hintsOn) seq.forEach(it=>{ if(it.fingers) it.midis.forEach((m,k)=>{ const f=it.fingers[k]; if(f!=null&&f!==''&&fmap[m]===undefined) fmap[m]=f; }); });
@@ -989,12 +1000,17 @@ $('bpm').oninput=function(){$('bpmLbl').textContent=this.value+' BPM';};
 function nudgeBpm(d){let v=Math.min(160,Math.max(10,(+$('bpm').value)+d));$('bpm').value=v;$('bpmLbl').textContent=v+' BPM';}
 $('bpmMinus').onclick=()=>nudgeBpm(-5);
 $('bpmPlus').onclick=()=>nudgeBpm(5);
-function applyZoom(){ renderStaff(); renderTicker(); renderKeyboard(); setIndex(idx,false); scrollToRange(); status('Масштаб: '+Math.round(zoom*100)+'%'); }
+function applyZoom(){ renderStaff(); renderTicker(); setIndex(idx,false); scrollToRange(); status('Масштаб: '+Math.round(zoom*100)+'%'); }
 function zoomBy(d){ zoom=Math.min(1.4,Math.max(0.2,+(zoom+d).toFixed(2))); applyZoom(); }
 document.querySelectorAll('.zoomOut').forEach(b=>b.onclick=()=>zoomBy(-0.1));
 document.querySelectorAll('.zoomIn').forEach(b=>b.onclick=()=>zoomBy(0.1));
 $('btnFullRange').onclick=()=>{sel.octaves=new Set([2,3,4,5,6]);syncUI();if(mode==='random'||mode==='chord')generate();status('Включены все октавы (весь диапазон)');};
 $('btnKbAll').onclick=function(){ kbAll=!kbAll; this.classList.toggle('on',kbAll); this.textContent=kbAll?'🎹 Только выбранные октавы':'🎹 Показать все октавы'; renderKeyboard(); setIndex(idx,false); scrollToRange(); };
+function kbRender(){ renderKeyboard(); setIndex(idx,false); scrollToRange(); }
+document.querySelectorAll('.kbZoomOut').forEach(b=>b.onclick=()=>{ if(kbAuto){kbZoom=kbFitScale;kbAuto=false;} kbZoom=Math.max(0.15,+(kbZoom-0.1).toFixed(2)); kbRender(); });
+document.querySelectorAll('.kbZoomIn').forEach(b=>b.onclick=()=>{ if(kbAuto){kbZoom=kbFitScale;kbAuto=false;} kbZoom=Math.min(1.6,+(kbZoom+0.1).toFixed(2)); kbRender(); });
+document.querySelectorAll('.kbZoomFit').forEach(b=>b.onclick=()=>{ kbAuto=true; kbRender(); status('Клавиатура подогнана по ширине'); });
+let _rzT=null; window.addEventListener('resize',()=>{ clearTimeout(_rzT); _rzT=setTimeout(()=>{ if(kbAuto) kbRender(); },180); });
 $('clefSel').onchange=()=>{
   const c=$('clefSel').value;
   if(c==='bass') sel.octaves=new Set([2,3]);            // Большая + Малая — ложатся на басовый стан
