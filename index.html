@@ -777,7 +777,7 @@ function miniStaff(it){
 }
 function renderTicker(){
   const row=$('tickerRow');row.innerHTML='';row.style.setProperty('--z',zoom);
-  const cm=$('chipMode')?$('chipMode').value:'name';
+  const cm = hintsOn ? ($('chipMode')?$('chipMode').value:'name') : 'staff';
   seq.forEach((n,i)=>{
     const c=document.createElement('div');c.className='tchip';c.dataset.i=i;
     c.style.width=Math.round(96*zoom)+'px';c.style.height=Math.round(128*zoom)+'px';
@@ -786,8 +786,8 @@ function renderTicker(){
       body=(hintsOn?'<div class="name" style="font-size:calc(19px*var(--z,1))">'+(n.name||'')+'</div>':'<div class="dur"></div>')+miniStaff(n)+
            (ff?'<div class="fin">'+ff+'</div>':'');
     }else{
-      const nm=hintsOn?(n.name||''):'?';
-      const mk=hintsOn?(n.mark||''):'';
+      const nm=n.name||'';
+      const mk=n.mark||'';
       body='<div class="tmark">'+mk+'</div>'+
            '<div class="name">'+nm+'</div>'+
            (hintsOn&&n.sub?'<div class="sub">'+n.sub+'</div>':'')+
@@ -957,8 +957,7 @@ function updateViews(){
   $('selChips').style.display = views.selector?'':'none';
   $('explainBlock').style.display = views.explain?'':'none';
   $('selectorCard').style.display = (views.selector||views.explain)?'':'none';
-  // строку «читай-играй» показываем, только если она включена И включены подсказки (иначе квадратики пустые)
-  $('tickerCard').style.display = (views.ticker && hintsOn)?'':'none';
+  $('tickerCard').style.display = views.ticker?'':'none';
   document.querySelectorAll('.vt').forEach(c=>c.classList.toggle('sel',views[c.dataset.view]));
 }
 
@@ -973,7 +972,7 @@ function applyPreset(p){
   else if(p==='memory'){hintsOn=true;labelsOn=true;detectionOn=false;fadeOn=true;setBpm(75);}
   else if(p==='full'){mode='random';sel.octaves=new Set([2,3,4,5,6]);sel.notes=new Set(DIA);
     hintsOn=true;labelsOn=true;detectionOn=false;fadeOn=false;}
-  syncUI(); generate();
+  syncUI(); updateViews(); generate();
   status(p==='blind'?'Вслепую: читайте стан и нажимайте клавишу':p==='run'?'Жмите Play — ноты поедут под линию':p==='memory'?'Сыгранные ноты гаснут — играйте по памяти':'');
 }
 
