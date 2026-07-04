@@ -90,6 +90,8 @@
   .ticker-row{position:absolute;top:0;bottom:0;display:flex;align-items:center;transition:transform .28s cubic-bezier(.22,.61,.36,1);will-change:transform}
   .tchip{width:96px;flex:none;height:128px;margin:0 4px;border-radius:14px;background:#fff;border:1px solid #e0e3ec;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#2a2e3d;transition:.25s;cursor:pointer;box-shadow:0 2px 8px rgba(30,35,60,.05);overflow:hidden}
   .tchip .dur{font-size:16px;color:#9aa0b2;height:18px}
+  .tchip .tmark{font-size:calc(13px*var(--z,1));color:#8a90a2;font-weight:800;height:18px;line-height:18px;letter-spacing:.2px}
+  .tchip.cur .tmark{color:#ece6ff}
   .tchip .name{font-size:calc(26px*var(--z,1));font-weight:800;letter-spacing:-.5px}
   .tchip .oct{font-size:11px;color:#8a90a2;font-weight:600}
   .tchip .sub{font-size:11px;color:#8a90a2;font-weight:600;text-align:center;line-height:1.2;padding:0 4px}
@@ -108,6 +110,10 @@
   .navbtn svg{width:20px;height:20px;fill:currentColor}
 
   .kb-scroll{overflow-x:auto;padding:14px 12px 18px}
+  .oct-bar{position:relative;height:24px;margin-bottom:8px}
+  .oct-seg{position:absolute;top:0;height:100%;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#2a2e3d;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);overflow:hidden;white-space:nowrap;letter-spacing:-.2px}
+  .kb-mid{position:absolute;top:0;bottom:0;border-left:2px dashed #6d4aff;z-index:8;pointer-events:none}
+  .kb-mid span{position:absolute;top:3px;left:4px;font-size:9px;color:#fff;background:#6d4aff;font-weight:800;white-space:nowrap;padding:1px 5px;border-radius:6px;box-shadow:0 1px 4px rgba(109,74,255,.5)}
   .keyboard{position:relative;height:210px;border-radius:10px;background:#1c1f2e}
   .wkey{position:absolute;top:0;bottom:0;background:linear-gradient(#fff,#eef0f5);border:1px solid #c7ccd8;border-top:none;border-radius:0 0 7px 7px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;cursor:pointer;transition:background .08s}
   .wkey:hover{background:linear-gradient(#fff,#e3e6ee)}
@@ -284,8 +290,11 @@
   </div>
 
   <div class="card" id="kbCard">
-    <div class="card-pad" style="padding-bottom:0"><span class="selector"><h3 style="margin:0">Клавиатура — все 88 клавиш (прокрутка)</h3></span></div>
-    <div class="kb-scroll" id="kbScroll"><div class="keyboard" id="keyboard"></div></div>
+    <div class="card-pad" style="padding-bottom:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span class="selector"><h3 style="margin:0">Клавиатура</h3></span>
+      <button class="pbtn" id="btnKbAll" style="margin-left:auto">🎹 Показать все октавы</button>
+    </div>
+    <div class="kb-scroll" id="kbScroll"><div class="oct-bar" id="octBar"></div><div class="keyboard" id="keyboard"></div></div>
   </div>
 
   <div class="card card-pad selector" id="selectorCard">
@@ -527,6 +536,10 @@ const EXERCISES=[
 // ---- состояние ----
 let mode='random', seq=[], idx=0, looping=false, playing=false, metro=false, timer=null;
 let zoom=1;
+let kbAll=false, kbX={};
+const OCT_NAME={0:'Субконтр.',1:'Контр.',2:'Большая',3:'Малая',4:'Первая',5:'Вторая',6:'Третья',7:'Четвёртая',8:'Пятая'};
+const OCT_MARK={0:'СК',1:'К',2:'Б',3:'М',4:'1',5:'2',6:'3',7:'4',8:'5'};
+const OCT_COLOR={0:'#cfd5e2',1:'#bcccf0',2:'#bfe6cf',3:'#f6dfae',4:'#f7bfce',5:'#d4c4f8',6:'#bfe8f0',7:'#f0d0b8',8:'#dcdce6'};
 let hintsOn=true, labelsOn=true, fadeOn=false, detectionOn=false, muted=false;
 const views={staff:true,ticker:true,keyboard:true,selector:true,explain:true};
 let pressed=new Set(), curClef='treble', rangeSet=new Set();
@@ -609,9 +622,16 @@ function loadExercise(){
   return out;
 }
 function enrich(it){
-  if(it.midis.length>1){it.label=it.chordQ?ruName(it.root)+' '+CHORD_RU[it.chordQ]:ruName(it.midis[0])+' акк.';
+  if(it.midis.length>1){
+    const marks=[...new Set(it.midis.map(m=>OCT_MARK[partsFromMidi(m).octave]))].join('·');
+    it.name=it.chordQ?ruName(it.root):ruName(it.midis[0]);
+    it.mark=it.chordQ?CHORD_RU[it.chordQ]:marks;
     it.sub=it.midis.map(ruName).join('·');it.oct='';}
-  else{const p=partsFromMidi(it.midis[0]);it.label=RU[p.letter]+(p.sharp?'♯':'');it.oct=p.octave;it.sub='';}
+  else{const p=partsFromMidi(it.midis[0]);
+    it.name=RU[p.letter]+(p.sharp?'♯':'');
+    it.mark=OCT_MARK[p.octave]||String(p.octave);
+    it.oct=p.octave;it.sub='';}
+  it.label=it.name+(it.mark?' '+it.mark:'');
 }
 function loadUserMelody(){
   const s=parseUserMelody($('userMel').value);
@@ -750,17 +770,17 @@ function renderTicker(){
   seq.forEach((n,i)=>{
     const c=document.createElement('div');c.className='tchip';c.dataset.i=i;
     c.style.width=Math.round(96*zoom)+'px';c.style.height=Math.round(128*zoom)+'px';
-    let body;
+    let body; const ff = (hintsOn&&n.fingers)?n.fingers.filter(Boolean).join('·'):'';
     if(cm==='staff'){
-      body='<div class="dur">'+(DUR_GLYPH[n.durName]||'')+'</div>'+miniStaff(n)+
-           (hintsOn&&n.finger?'<div class="fin">'+n.finger+'</div>':'');
+      body=(hintsOn?'<div class="name" style="font-size:calc(19px*var(--z,1))">'+(n.name||'')+'</div>':'<div class="dur"></div>')+miniStaff(n)+
+           (ff?'<div class="fin">'+ff+'</div>':'');
     }else{
-      const nm=hintsOn?n.label:'?';
-      body='<div class="dur">'+(DUR_GLYPH[n.durName]||'')+'</div>'+
+      const nm=hintsOn?(n.name||''):'?';
+      const mk=hintsOn?(n.mark||''):'';
+      body='<div class="tmark">'+mk+'</div>'+
            '<div class="name">'+nm+'</div>'+
-           (hintsOn&&n.oct!==''?'<div class="oct">'+octRu(n.oct)+' окт.</div>':'')+
            (hintsOn&&n.sub?'<div class="sub">'+n.sub+'</div>':'')+
-           (hintsOn&&n.finger?'<div class="fin">'+n.finger+'</div>':'');
+           (ff?'<div class="fin">'+ff+'</div>':'');
     }
     c.innerHTML=body;
     c.addEventListener('click',()=>{stopPlay();setIndex(i);});
@@ -786,31 +806,55 @@ for(let m=LO;m<=HI;m++){ if(IS_SHARP[m%12]) BLACKS.push(m); else { WIDX[m]=WHITE
 const WKEYW0=42,BKEYW0=26; let WKEYW=42,BKEYW=26;
 function renderKeyboard(){
   WKEYW=Math.max(22,Math.round(WKEYW0*zoom)); BKEYW=Math.round(WKEYW*BKEYW0/WKEYW0);
-  const kb=$('keyboard');kb.innerHTML='';kb.style.width=(WHITE.length*WKEYW)+'px';
+  const kb=$('keyboard'),bar=$('octBar');kb.innerHTML='';bar.innerHTML='';kbX={};
   kb.classList.toggle('no-labels',!labelsOn);
+  const octSet=new Set(sel.octaves);
+  if(!kbAll) rangeSet.forEach(m=>octSet.add(partsFromMidi(m).octave));
+  const showAll=kbAll||!octSet.size;
+  const vis=m=>showAll||octSet.has(partsFromMidi(m).octave);
+  const whites=WHITE.filter(vis), widx={}; whites.forEach((m,i)=>widx[m]=i);
+  const totalW=whites.length*WKEYW; kb.style.width=totalW+'px'; bar.style.width=totalW+'px';
   const fmap={};
   if(hintsOn) seq.forEach(it=>{ if(it.fingers) it.midis.forEach((m,k)=>{ const f=it.fingers[k]; if(f!=null&&f!==''&&fmap[m]===undefined) fmap[m]=f; }); });
   const finBadge=m=> fmap[m]!==undefined ? '<div class="kbfin">'+fmap[m]+'</div>' : '';
-  WHITE.forEach((m,i)=>{
+  whites.forEach((m,i)=>{
     const p=partsFromMidi(m),el=document.createElement('div');
     el.className='wkey'+((hintsOn&&rangeSet.has(m))?' in-range':'');el.dataset.midi=m;
-    el.style.left=(i*WKEYW)+'px';el.style.width=WKEYW+'px';
+    const x=i*WKEYW; kbX[m]=x; el.style.left=x+'px';el.style.width=WKEYW+'px';
     el.innerHTML=finBadge(m)+(p.letter==='C'?'<div class="octn">'+p.octave+'</div>':'')+'<div class="lbl">'+RU[p.letter]+'</div>';
     el.addEventListener('pointerdown',e=>{e.preventDefault();pressNote(m);});kb.appendChild(el);
   });
-  BLACKS.forEach(m=>{
-    const wi=WIDX[m-1],el=document.createElement('div');
+  BLACKS.filter(vis).forEach(m=>{
+    const below=m-1; if(widx[below]===undefined)return;
+    const el=document.createElement('div');
     el.className='bkey'+((hintsOn&&rangeSet.has(m))?' in-range':'');el.dataset.midi=m;
-    el.style.left=((wi+1)*WKEYW-BKEYW/2)+'px';el.style.width=BKEYW+'px';
+    const x=(widx[below]+1)*WKEYW-BKEYW/2; kbX[m]=x; el.style.left=x+'px';el.style.width=BKEYW+'px';
     el.innerHTML=finBadge(m);
     el.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();pressNote(m);});kb.appendChild(el);
   });
+  // цветные полосы октав над клавиатурой (только при подсказках)
+  bar.style.display = hintsOn ? '' : 'none';
+  if(hintsOn){
+    const byOct={}; whites.forEach((m,i)=>{ const o=partsFromMidi(m).octave; (byOct[o]=byOct[o]||[]).push(i); });
+    Object.keys(byOct).forEach(o=>{
+      const idxs=byOct[o], a=Math.min.apply(null,idxs), b=Math.max.apply(null,idxs), left=a*WKEYW, w=(b-a+1)*WKEYW;
+      const seg=document.createElement('div'); seg.className='oct-seg';
+      seg.style.left=left+'px'; seg.style.width=w+'px'; seg.style.background=OCT_COLOR[o]||'#e0e0e8';
+      seg.textContent = w>60 ? OCT_NAME[o] : (w>34 ? (OCT_NAME[o]||'').slice(0,4)+'.' : '');
+      bar.appendChild(seg);
+    });
+  }
+  // середина фортепиано — тонкая черта на До первой октавы
+  if(kbX[60]!==undefined){
+    const mid=document.createElement('div'); mid.className='kb-mid'; mid.style.left=kbX[60]+'px';
+    mid.innerHTML='<span>центр · До¹</span>'; kb.appendChild(mid);
+  }
 }
 function keyEl(m){return document.querySelector('[data-midi="'+m+'"]');}
 function clearActive(){document.querySelectorAll('.wkey.active,.bkey.active').forEach(e=>e.classList.remove('active'));}
-function keyX(m){return IS_SHARP[m%12]?((WIDX[m-1]+1)*WKEYW):(WIDX[m]*WKEYW);}
+function keyX(m){return kbX[m]!==undefined?kbX[m]:(IS_SHARP[m%12]?((WIDX[m-1]+1)*WKEYW):(WIDX[m]*WKEYW));}
 function scrollToRange(){
-  const xs=[...rangeSet].filter(m=>m>=LO&&m<=HI).map(keyX); if(!xs.length)return;
+  const xs=[...rangeSet].filter(m=>m>=LO&&m<=HI&&kbX[m]!==undefined).map(m=>kbX[m]); if(!xs.length)return;
   const c=(Math.min.apply(null,xs)+Math.max.apply(null,xs))/2,ks=$('kbScroll');
   ks.scrollLeft=Math.max(0,c-ks.clientWidth/2);
 }
@@ -950,6 +994,7 @@ function zoomBy(d){ zoom=Math.min(1.4,Math.max(0.2,+(zoom+d).toFixed(2))); apply
 document.querySelectorAll('.zoomOut').forEach(b=>b.onclick=()=>zoomBy(-0.1));
 document.querySelectorAll('.zoomIn').forEach(b=>b.onclick=()=>zoomBy(0.1));
 $('btnFullRange').onclick=()=>{sel.octaves=new Set([2,3,4,5,6]);syncUI();if(mode==='random'||mode==='chord')generate();status('Включены все октавы (весь диапазон)');};
+$('btnKbAll').onclick=function(){ kbAll=!kbAll; this.classList.toggle('on',kbAll); this.textContent=kbAll?'🎹 Только выбранные октавы':'🎹 Показать все октавы'; renderKeyboard(); setIndex(idx,false); scrollToRange(); };
 $('clefSel').onchange=()=>{
   const c=$('clefSel').value;
   if(c==='bass') sel.octaves=new Set([2,3]);            // Большая + Малая — ложатся на басовый стан
@@ -990,7 +1035,7 @@ $('btnMetro').onclick=function(){metro=!metro;this.classList.toggle('on',metro);
 $('octChips').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;
   if(c.dataset.all){sel.octaves=new Set([2,3,4,5,6]);}
   else{const o=+c.dataset.oct;if(sel.octaves.has(o))sel.octaves.delete(o);else sel.octaves.add(o);if(!sel.octaves.size)sel.octaves.add(o);}
-  syncUI(); if(mode==='random'||mode==='chord')generate();});
+  syncUI(); if(mode!=='custom')generate(); else {renderKeyboard();setIndex(idx,false);scrollToRange();}});
 $('noteChips').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;
   if(c.dataset.note==='black')sel.black=!sel.black;
   else{const n=c.dataset.note;if(sel.notes.has(n))sel.notes.delete(n);else sel.notes.add(n);if(!sel.notes.size)sel.notes.add(n);}
