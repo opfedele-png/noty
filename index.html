@@ -552,7 +552,7 @@ function status(t,ok){$('status').innerHTML=ok?('<b>'+t+'</b>'):t;}
 function pickClef(a){const c=$('clefSel').value;return (c==='treble'||c==='bass')?c:a;}
 function buildPool(){
   let octs=[...sel.octaves].sort((a,b)=>a-b); if(!octs.length)octs=[4];
-  if(!$('swPitch').classList.contains('on')) octs=[octs[0]];
+  if(!$('swPitch').classList.contains('on')) octs=[4];   // Разные октавы выкл → всегда Первая (центральная)
   const pool=[];
   octs.forEach(o=>{
     DIA.forEach(l=>{const m=midiFromName(l+o); if(sel.notes.has(l)&&m>=LO&&m<=HI) pool.push(m);});
