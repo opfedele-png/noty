@@ -218,9 +218,9 @@
     </div>
     <div class="controls mode-panel" data-panel="exercise">
       <div class="ctl"><label>Упражнение</label><select id="exerciseSel" style="min-width:320px"></select></div>
-      <div class="ctl"><label>Повторы</label><select id="exReps"><option>1</option><option>2</option><option>4</option><option>6</option></select></div>
+      <div class="ctl"><label>Кол-во нот</label><select id="exCount"><option>15</option><option selected>30</option><option>50</option><option>80</option></select></div>
       <div class="ctl" style="flex:1 1 100%"><span id="exDesc" class="hint"></span></div>
-      <div class="ctl" style="flex:1 1 100%"><span class="hint">Упражнение переносится в выбранную октаву (блок «Октавы» внизу) и повторяется указанное число раз.</span></div>
+      <div class="ctl" style="flex:1 1 100%"><span class="hint">Упражнение переносится в выбранную октаву (блок «Октавы» внизу) и повторяется до нужного количества нот.</span></div>
     </div>
     <div class="controls mode-panel" data-panel="custom">
       <div class="ctl" style="flex:1 1 100%;align-items:center;flex-wrap:wrap">
@@ -590,10 +590,11 @@ function loadExercise(){
   const lo=Math.min.apply(null,all), hi=Math.max.apply(null,all);
   while(hi+shift>108) shift-=12;
   while(lo+shift<21) shift+=12;
-  const reps=Math.max(1,+(($('exReps')||{value:1}).value)||1);
+  const cnt=Math.max(1,+(($('exCount')||{value:30}).value)||30);
   let base;
   if(ex.chords) base=ex.chords.map(ns=>({midis:ns.map(n=>midiFromName(n)+shift),dur:2,durName:'half',finger:ex.fin}));
   else base=ex.seq.map(([n,f])=>({midis:[midiFromName(n)+shift],dur:1,durName:'quarter',finger:f}));
+  const reps=Math.max(1,Math.round(cnt/base.length));
   let out=[]; for(let r=0;r<reps;r++) out=out.concat(base.map(it=>({midis:it.midis.slice(),dur:it.dur,durName:it.durName,finger:it.finger})));
   return out;
 }
@@ -905,7 +906,7 @@ function applyPreset(p){
   EXERCISES.forEach((e,i)=>{const o=document.createElement('option');o.value=i;o.textContent=e.name;s.appendChild(o);});
   $('exDesc').textContent=EXERCISES[0].desc;})();
 $('exerciseSel').onchange=function(){$('exDesc').textContent=EXERCISES[+this.value].desc;generate();};
-$('exReps').onchange=()=>{ if(mode==='exercise') generate(); };
+$('exCount').onchange=()=>{ if(mode==='exercise') generate(); };
 
 // ---- обработчики ----
 $('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;mode=t.dataset.mode;syncUI();stopPlay();if(mode!=='custom')generate();});
