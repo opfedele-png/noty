@@ -71,6 +71,14 @@
   .tbtn svg{width:22px;height:22px;fill:currentColor}
   .status{margin-left:auto;font-size:14px;color:var(--muted);font-weight:500}
   .status b{color:var(--ok)}
+  .hitstat{display:inline-flex;align-items:flex-end;gap:6px;margin-left:12px;flex:0 0 auto}
+  .hitstat .hs{display:inline-flex;flex-direction:column;align-items:center;line-height:1}
+  .hitstat .hi{font-size:13px;font-weight:800}
+  .hitstat .hn{font-size:15px;font-weight:800;color:var(--ink,#222)}
+  .hitstat .ok .hi{color:var(--ok)} .hitstat .bad .hi{color:var(--err)}
+  .hitstat .sep{color:var(--muted);font-size:15px;font-weight:600;padding-bottom:1px}
+  .hitstat.pop{animation:hitpop .5s ease}
+  @keyframes hitpop{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
 
   .staff-wrap{position:relative;overflow-x:auto;background:linear-gradient(#fff,#fbfbfe);padding:8px 0;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
   .staff-stage{position:relative}
@@ -94,6 +102,8 @@
   .tchip.cur .tmark{color:#ece6ff}
   .tchip .name{font-size:calc(26px*var(--z,1));font-weight:800;letter-spacing:-.5px}
   .tchip .oct{font-size:11px;color:#8a90a2;font-weight:600}
+  .tchip .tlabel{font-size:calc(13px*var(--z,1));font-weight:700;color:#6d4aff;margin-top:4px;letter-spacing:.2px;line-height:1}
+  .tchip.cur .tlabel{color:#fff}
   .tchip .sub{font-size:11px;color:#8a90a2;font-weight:600;text-align:center;line-height:1.2;padding:0 4px}
   .tchip .fin{margin-top:2px;font-size:11px;color:#1f2330;background:var(--amber);border-radius:20px;padding:1px 8px;font-weight:800}
   .tchip svg.mini{display:block}
@@ -110,11 +120,11 @@
   .navbtn svg{width:20px;height:20px;fill:currentColor}
 
   .kb-scroll{overflow-x:auto;padding:14px 12px 18px}
-  .oct-bar{position:relative;height:24px;margin-bottom:8px}
+  .oct-bar{position:relative;height:24px;margin:0 auto 8px}
   .oct-seg{position:absolute;top:0;height:100%;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#2a2e3d;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);overflow:hidden;white-space:nowrap;letter-spacing:-.2px}
   .kb-mid{position:absolute;top:0;bottom:0;border-left:2px dashed #6d4aff;z-index:8;pointer-events:none}
   .kb-mid span{position:absolute;top:3px;left:4px;font-size:9px;color:#fff;background:#6d4aff;font-weight:800;white-space:nowrap;padding:1px 5px;border-radius:6px;box-shadow:0 1px 4px rgba(109,74,255,.5)}
-  .keyboard{position:relative;height:210px;border-radius:10px;background:#1c1f2e}
+  .keyboard{position:relative;height:210px;border-radius:10px;background:#1c1f2e;margin:0 auto}
   .wkey{position:absolute;top:0;bottom:0;background:linear-gradient(#fff,#eef0f5);border:1px solid #c7ccd8;border-top:none;border-radius:0 0 7px 7px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;cursor:pointer;transition:background .08s}
   .wkey:hover{background:linear-gradient(#fff,#e3e6ee)}
   .wkey.in-range{background:linear-gradient(#eef5ff,#cfe2ff)}
@@ -180,7 +190,7 @@
   <div class="head">
     <div>
       <h1>🎹 Нотный тренажёр</h1>
-      <div class="sub">Читай ноты с экрана — играй на своём фортепиано. Ноты · гаммы · аккорды · упражнения · полный диапазон 88 клавиш.</div>
+      <div class="sub">Скрипичный и басовый ключ · гаммы · аккорды · упражнения. Тренажёр запоминает ошибки: ноты, где ты чаще ошибаешься, выпадают чаще.</div>
     </div>
     <div class="badge">Пробел — Play · ←/→ — листать ноты</div>
   </div>
@@ -206,7 +216,7 @@
     <div class="controls mode-panel on" data-panel="random">
       <div class="ctl"><label>🎵 Простые мелодии <span style="color:#a855f7;font-weight:700">бета</span></label><div class="switch" id="swMelody"></div></div>
       <div class="ctl"><label>Длительности (доли)</label><div class="switch" id="swDur"></div></div>
-      <div class="ctl"><label>Разные октавы</label><div class="switch" id="swPitch"></div></div>
+      <div class="ctl"><label>Разные октавы</label><div class="switch on" id="swPitch"></div></div>
       <div class="ctl"><label>Кол-во нот</label>
         <select id="noteCount"><option selected>30</option><option>50</option><option>80</option></select></div>
     </div>
@@ -253,7 +263,7 @@
       <div class="ctl"><label>Подписи клавиш</label><div class="switch on" id="swLabels"></div></div>
       <div class="ctl"><label>Исчезающие ноты</label><div class="switch" id="swFade"></div></div>
       <div class="ctl"><label>Проверять нажатия</label><div class="switch" id="swDetect"></div></div>
-      <div class="ctl"><label>В строке</label><select id="chipMode"><option value="name">Названия нот</option><option value="staff">Ноты на стане</option></select></div>
+      <div class="ctl"><label>В строке</label><select id="chipMode"><option value="staff" selected>Ноты на стане</option><option value="name">Названия нот</option></select></div>
       <button class="pbtn" id="btnSwap">⇅ Поменять: стан ↔ строка</button>
       <button class="gen" id="btnGen">Генерировать</button>
     </div>
@@ -273,6 +283,11 @@
         <button class="pbtn zoomOut" title="Мельче" style="padding:6px 11px;font-size:15px;line-height:1;margin-left:6px">🔍−</button>
         <button class="pbtn zoomIn" title="Крупнее" style="padding:6px 11px;font-size:15px;line-height:1">🔍+</button>
         <span class="status" id="status"></span>
+        <span class="hitstat" id="hitStat" title="Верные / ошибочные нажатия">
+          <span class="hs ok"><span class="hi">✓</span><span class="hn" id="statOK">0</span></span>
+          <span class="hs sep">/</span>
+          <span class="hs bad"><span class="hi">✗</span><span class="hn" id="statBad">0</span></span>
+        </span>
       </div>
     </div>
     <div class="staff-stage">
@@ -553,6 +568,8 @@ const OCT_COLOR={0:'#cfd5e2',1:'#bcccf0',2:'#bfe6cf',3:'#f6dfae',4:'#f7bfce',5:'
 let hintsOn=true, labelsOn=true, fadeOn=false, detectionOn=false, muted=false, showFingers=true;
 const views={staff:true,ticker:true,keyboard:true,selector:true,explain:true};
 let pressed=new Set(), curClef='treble', rangeSet=new Set();
+let statOK=0, statBad=0;                              // счётчик верных/ошибочных нажатий за прогон
+function updateStat(){const a=$('statOK'),b=$('statBad');if(a)a.textContent=statOK;if(b)b.textContent=statBad;}
 const sel={octaves:new Set([4]),notes:new Set(DIA),black:false};
 const $=id=>document.getElementById(id);
 function bpm(){return +$('bpm').value;} function beatSec(){return 60/bpm();}
@@ -576,18 +593,46 @@ function measureRhythm(on){
   while(rem>.001){const fit=opts.filter(o=>o[1]<=rem+.001);const p=fit[Math.floor(Math.random()*fit.length)];out.push(p);rem-=p[1];}
   return out;
 }
+// ---- адаптивная сложность: часто ошибаемые ноты выпадают чаще ----
+const noteStats={};                                  // midi → {ok,bad}; сбрасывается при перезагрузке страницы
+function noteWeight(m){
+  const s=noteStats[m]; if(!s) return 1;
+  const total=s.ok+s.bad; if(total<2) return 1;      // мало данных — обычный вес
+  const errRate=s.bad/total;                         // доля ошибок 0..1
+  return 0.5 + 2.5*errRate;                           // всегда верно → 0.5×, всегда ошибка → 3×
+}
+function weightedPick(pool){
+  let sum=0; const w=pool.map(m=>{const x=noteWeight(m);sum+=x;return x;});
+  let r=Math.random()*sum;
+  for(let i=0;i<pool.length;i++){ r-=w[i]; if(r<=0) return pool[i]; }
+  return pool[pool.length-1];
+}
+function recordHit(m,ok){
+  if(!noteStats[m]) noteStats[m]={ok:0,bad:0};
+  if(ok) noteStats[m].ok++; else noteStats[m].bad++;
+}
+function autoClefFromOctaves(){
+  const octs=[...sel.octaves];
+  const hasT=octs.some(o=>o>=4);   // Первая и выше → зона скрипичного
+  const hasB=octs.some(o=>o<=3);   // Малая и ниже → зона басового
+  return (hasT&&hasB)?'grand':(hasB?'bass':'treble');
+}
 function genRandom(){
+  $('clefSel').value=autoClefFromOctaves();          // стан подстраивается под выбранные октавы
   const pool=buildPool(),durOn=$('swDur').classList.contains('on');
   const target=+$('noteCount').value;
   const med=pool.slice().sort((a,b)=>a-b)[Math.floor(pool.length/2)];
   curClef=pickClef(med<60?'bass':'treble');
-  const out=[];let beat=0,bar=1;
+  const out=[];let beat=0,bar=1,prev=null;
   while(out.length<target){
     let dur,dn;
     if(!durOn){dur=1;dn='quarter';}
     else{const rem=4-beat;const opts=[['whole',4],['half',2],['quarter',1],['eighth',.5]].filter(o=>o[1]<=rem+.001);
       const p=opts[Math.floor(Math.random()*opts.length)];dn=p[0];dur=p[1];}
-    out.push({midis:[pool[Math.floor(Math.random()*pool.length)]],dur:dur,durName:dn,first:beat<.001,bar:bar});
+    let m=weightedPick(pool);
+    if(pool.length>2){let g=0;while(m===prev&&g++<4)m=weightedPick(pool);}   // не повторять одну ноту подряд
+    prev=m;
+    out.push({midis:[m],dur:dur,durName:dn,first:beat<.001,bar:bar});
     beat+=dur; if(beat>=4-.001){beat=0;bar++;}
   }
   return out;
@@ -668,6 +713,7 @@ function generate(){
   seq.forEach(enrich);
   rangeSet=new Set(); seq.forEach(it=>it.midis.forEach(m=>rangeSet.add(m)));
   idx=0; pressed.clear();
+  statOK=0; statBad=0; updateStat();            // счётчик ✓/✗ обнуляется на новый прогон
   renderStaff(); renderTicker(); renderKeyboard();
   setIndex(0,false); scrollToRange();
   const melTag=(mode==='random'&&$('swMelody').classList.contains('on'))?' · «'+melName+'»':'';
@@ -800,7 +846,8 @@ function renderTicker(){
     c.style.width=Math.round(96*zoom)+'px';c.style.height=Math.round(128*zoom)+'px';
     let body; const ff = (hintsOn&&n.fingers)?n.fingers.filter(Boolean).join('·'):'';
     if(cm==='staff'){
-      body=(hintsOn?'<div class="name" style="font-size:calc(19px*var(--z,1))">'+(n.name||'')+'</div>':'<div class="dur"></div>')+miniStaff(n)+
+      body=miniStaff(n)+
+           (hintsOn?'<div class="tlabel">'+(n.label||'')+'</div>':'')+
            (ff?'<div class="fin">'+ff+'</div>':'');
     }else{
       const nm=n.name||'';
@@ -920,15 +967,20 @@ function pressNote(m){
   if(!seq.length||playing)return;            // во время автоплея нажатия не двигают курсор
   const need=new Set(seq[idx].midis);
   if(need.has(m)){                            // верная нота — засчитываем и идём дальше
+    if(!pressed.has(m)){ statOK++; recordHit(m,true); updateStat(); }
     pressed.add(m);
     if([...need].every(x=>pressed.has(x))) advanceCorrect();
   }else if(detectionOn){                       // строгая проверка: неверная нота — ошибка
+    statBad++; seq[idx].midis.forEach(t=>recordHit(t,false)); updateStat();
     wrongFeedback();
   }
 }
 function advanceCorrect(){
   if(idx<seq.length-1) setIndex(idx+1,false);
-  else{if(looping)setIndex(0,false);else{clearActive();status('Пройдено! Отлично 🎉',true);}}
+  else{if(looping)setIndex(0,false);else{clearActive();
+    status('Пройдено! Отлично 🎉 · ✓'+statOK+' / ✗'+statBad,true);
+    const hs=$('hitStat'); if(hs){hs.classList.remove('pop');void hs.offsetWidth;hs.classList.add('pop');}
+  }}
 }
 function wrongFeedback(){buzz();const kb=$('keyboard');kb.classList.add('shake');setTimeout(()=>kb.classList.remove('shake'),340);}
 function autoStep(){
@@ -1037,9 +1089,9 @@ document.querySelectorAll('.kbZoomFit').forEach(b=>b.onclick=()=>{ kbAuto=true; 
 let _rzT=null; window.addEventListener('resize',()=>{ clearTimeout(_rzT); _rzT=setTimeout(()=>{ if(kbAuto) kbRender(); },180); });
 $('clefSel').onchange=()=>{
   const c=$('clefSel').value;
-  if(c==='bass') sel.octaves=new Set([2,3]);            // Большая + Малая — ложатся на басовый стан
-  else if(c==='treble') sel.octaves=new Set([4,5]);     // Первая + Вторая — на скрипичный
-  else sel.octaves=new Set([2,3,4,5]);                  // грандстан — обе строки
+  if(c==='bass') sel.octaves=new Set([3]);              // Малая — на басовом стане
+  else if(c==='treble') sel.octaves=new Set([4]);       // Первая — на скрипичном
+  else sel.octaves=new Set([3,4]);                      // грандстан — Малая+Первая (обе строки)
   syncUI(); generate();
 }; $('scaleTonic').onchange=generate; $('scaleType').onchange=generate;
 $('scaleDir').onchange=generate; $('chordCount').onchange=generate; $('scalePattern').onchange=generate;
